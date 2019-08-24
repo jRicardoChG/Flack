@@ -15,14 +15,45 @@ $Color5:#3B4C4D;
 }
 #contenido
 {
-    display: flex;
-    flex-direction: column;
-    div
+        display: flex;
+        flex-direction: column;
+    :nth-child(1)
     {
         display: flex;
         flex-direction: column;
+        #titulocanal
+        {
+            width: 100%;
+            align-self: flex-start;
+        }
     }
-    
+    :nth-child(1)
+    {
+        #chat
+        {
+            overflow: hidden;
+            flex: 1 1 auto;
+            width: 100%;
+            align-self: center;
+        }
+    }
+    #message
+    {
+        :nth-child(2)
+        {
+            justify-content: flex-end;
+            display: flex;
+            flex-direction: column;
+            div
+            {
+                width:100%;
+            }
+            button
+            {
+                align-items: center;
+            }
+        }
+    }
     background-color: $Color4;
 }
 section
@@ -99,3 +130,13 @@ textarea {
     min-height: 55px;
     max-height: 123px;
 }
+
+#message
+{
+    height: auto;
+    width: 100%;
+    align-self: flex-end;
+}
+
+
+
