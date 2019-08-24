@@ -1,0 +1,101 @@
+$Color1:#3F5671;
+$Color2:#739885;
+$Color3:#9DBBBB;
+$Color4:#F2F2F2;
+$Color5:#3B4C4D;
+
+.global
+{
+    border-width: 1px;
+    border-style: dotted;
+    border-color: black; 
+    margin:0px;
+    padding:0px;
+    border-radius: 5px;
+}
+#contenido
+{
+    display: flex;
+    flex-direction: column;
+    div
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    background-color: $Color4;
+}
+section
+{
+    height: 100vh;
+}
+
+#menuPrincipal
+{ 
+    background-color: $Color1;
+    div
+    {
+        display: flex;
+        flex-direction: column;
+    }
+}
+#titulo
+{
+    align-items: center;
+    justify-content: center;
+    img
+    {
+        width:50px;
+        height:50px;
+    }
+    :nth-child(1)
+    {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.contenidos
+{
+    align-items: center;
+    justify-content: center;
+    h1
+    {
+        text-align: center;
+        font-size: 50px;
+        width: 100%;
+        height: 100%;
+    }
+    h2
+    {
+        text-align: center;
+        font-size: 35px;
+        width: 100%;
+        height: 100%;
+    }
+    h3
+    {
+        text-align: center;
+        font-size: 25px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+#Canales
+{ 
+    background-color: $Color2;
+    div
+    {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+textarea {
+    resize: none;
+    overflow: scroll;
+    overflow-x: hidden; 
+    min-height: 55px;
+    max-height: 123px;
+}

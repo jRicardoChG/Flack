@@ -10,15 +10,41 @@
     <title>Document</title>
 </head>
 <body>
-    <section class="row col-12" style="margin: 0px;">
-        <div class="col-3">
-            <div class="col-12"></div>
+    <section class="row col-12">
+        <div class="col-2" id="menuPrincipal">
+            <div class="">
+                <div id="titulo">
+                    <div class="">
+                            <div><img src = "../static/img/Slack_Icon.png"></div>
+                            <div><h1>FlacK</h1></div>
+                            <div><img src = "../static/img/flask-tutorial.png"></div>
+                    </div>
+                </div>
+                <div class="contenidos"><h3>Usuario</h3></div>
+                <div class="contenidos"><h3>Amigos</h3></div>
+            </div>
         </div>
-        <div class="col-6">
-            <div class="col-12"></div>
+        <div class="col-8" id="contenido">
+            <div class="col-12">
+                <div class="contenidos">
+                    <h2>Channel:Este mismo</h2>
+                </div>
+                <div id="chat">
+
+                </div>
+                <div id="message" class="container-flow row">
+                        <textarea class="col-11" onkeyup="auto_grow(this)"></textarea>
+                        <button class="col-1">Enviar</button>
+                </div>
+            </div>
         </div>
-        <div class="col-3">
-            <div class="col-12"></div>
+        <div class="col-2" id="Canales">
+            <div class="col-12">
+                <div class="contenidos"><h1>Canales</h1></div>
+                <div class="contenidos"><h3>Crear Canales</h3></div>
+                <div class="contenidos"><h3>Buscar Canales</h3></div>
+                <div class="contenidos"><h3>Canales Propios</h3></div>
+            </div>
         </div>
     </section>
 </body>
