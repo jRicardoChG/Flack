@@ -27,21 +27,44 @@
     background-color: #B3D8C5; }
 
 #contenido {
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background-color: #F2F2F2; }
-  #contenido div:nth-child(1) {
+  #contenido > div:nth-child(1) {
     display: flex;
     flex-direction: column; }
-    #contenido div:nth-child(1) #titulocanal {
+    #contenido > div:nth-child(1) #titulocanal {
       width: 100%;
       align-self: flex-start; }
-  #contenido div:nth-child(1) #chat {
-    overflow: scroll;
-    overflow-x: hidden;
-    flex: 1 1 auto;
+  #contenido > div:nth-child(1) {
+    overflow: hidden; }
+    #contenido > div:nth-child(1) #chat {
+      overflow: hidden;
+      flex: 1 1 auto;
+      width: 98%;
+      align-self: center; }
+      #contenido > div:nth-child(1) #chat #chatscroll {
+        width: 100%;
+        overflow: scroll;
+        resize: none;
+        overflow-x: hidden;
+        height: 100%; }
+  #contenido #message #messageSon {
+    min-height: 70px;
+    max-height: 150px;
     width: 100%;
-    align-self: center; }
+    display: flex;
+    flex-direction: row; }
+  #contenido #message div:nth-child(1) {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column; }
+    #contenido #message div:nth-child(1) div {
+      width: 100%; }
+    #contenido #message div:nth-child(1) button {
+      align-items: center; }
   #contenido #message div:nth-child(2) {
     justify-content: flex-end;
     display: flex;
@@ -125,19 +148,48 @@ section {
 
 #Canales {
   background-color: #739885; }
+  #Canales h3:hover {
+    background-color: #B3D8C5; }
+  #Canales #chkCanCrear:not(checked) ~ div {
+    height: 80px; }
+  #Canales #chkCanCrear:checked ~ div {
+    height: 0px; }
+  #Canales #chkCanPropios:not(checked) ~ div {
+    height: 200px; }
+  #Canales #chkCanPropios:checked ~ div {
+    height: 0px; }
   #Canales div {
     display: flex;
     flex-direction: column; }
+  #Canales #canalesPropios {
+    max-height: 160px;
+    transition: height 0.3s linear;
+    height: 0px;
+    width: 100%;
+    resize: none;
+    overflow: scroll;
+    overflow-x: hidden; }
+    #Canales #canalesPropios div div {
+      padding-left: 5px; }
+  #Canales #canalCrear {
+    max-height: 160px;
+    transition: height 0.3s linear;
+    height: 0px;
+    width: 100%;
+    overflow: hidden; }
+  #Canales button {
+    padding: 5px; }
+  #Canales input {
+    background-color: #F2F2F2; }
 
 textarea {
   resize: none;
   overflow: scroll;
   overflow-x: hidden;
-  min-height: 55px;
-  max-height: 123px; }
+  min-height: 70px;
+  max-height: 100%; }
 
 #message {
-  height: auto;
   width: 100%;
   align-self: flex-end; }
 
