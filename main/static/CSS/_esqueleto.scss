@@ -233,6 +233,7 @@ section
     #chkCanPropios:checked~div
     {
         height: 0px;
+        overflow: hidden;
     }
     background-color: $Color2;
     div
@@ -246,9 +247,12 @@ section
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
-        resize: none; 
-        overflow: scroll;
-        overflow-x:hidden;
+        >div:nth-child(2)
+        {
+            resize: none; 
+            overflow: scroll;
+            overflow-x:hidden;
+        }
         div div
         {
             padding-left:5px;

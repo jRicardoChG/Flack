@@ -157,7 +157,8 @@ section {
   #Canales #chkCanPropios:not(checked) ~ div {
     height: 200px; }
   #Canales #chkCanPropios:checked ~ div {
-    height: 0px; }
+    height: 0px;
+    overflow: hidden; }
   #Canales div {
     display: flex;
     flex-direction: column; }
@@ -165,10 +166,11 @@ section {
     max-height: 160px;
     transition: height 0.3s linear;
     height: 0px;
-    width: 100%;
-    resize: none;
-    overflow: scroll;
-    overflow-x: hidden; }
+    width: 100%; }
+    #Canales #canalesPropios > div:nth-child(2) {
+      resize: none;
+      overflow: scroll;
+      overflow-x: hidden; }
     #Canales #canalesPropios div div {
       padding-left: 5px; }
   #Canales #canalCrear {
