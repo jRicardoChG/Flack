@@ -6,28 +6,49 @@
   padding: 0px;
   border-radius: 5px; }
 
+.white {
+  color: #c8c8c8; }
+
+.flexMessageLeft {
+  display: flex;
+  flex-direction: row; }
+  .flexMessageLeft p {
+    text-align: justify;
+    padding: 2px;
+    background-color: #6F96B1; }
+
+.flexMessageRight {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; }
+  .flexMessageRight p {
+    text-align: justify;
+    padding: 2px;
+    background-color: #B3D8C5; }
+
 #contenido {
   display: flex;
   flex-direction: column;
   background-color: #F2F2F2; }
-  #contenido :nth-child(1) {
+  #contenido div:nth-child(1) {
     display: flex;
     flex-direction: column; }
-    #contenido :nth-child(1) #titulocanal {
+    #contenido div:nth-child(1) #titulocanal {
       width: 100%;
       align-self: flex-start; }
-  #contenido :nth-child(1) #chat {
-    overflow: hidden;
+  #contenido div:nth-child(1) #chat {
+    overflow: scroll;
+    overflow-x: hidden;
     flex: 1 1 auto;
     width: 100%;
     align-self: center; }
-  #contenido #message :nth-child(2) {
+  #contenido #message div:nth-child(2) {
     justify-content: flex-end;
     display: flex;
     flex-direction: column; }
-    #contenido #message :nth-child(2) div {
+    #contenido #message div:nth-child(2) div {
       width: 100%; }
-    #contenido #message :nth-child(2) button {
+    #contenido #message div:nth-child(2) button {
       align-items: center; }
 
 section {
@@ -45,7 +66,7 @@ section {
   #titulo img {
     width: 50px;
     height: 50px; }
-  #titulo :nth-child(1) {
+  #titulo div:nth-child(1) {
     display: flex;
     flex-direction: row; }
 
@@ -56,17 +77,51 @@ section {
     text-align: center;
     font-size: 50px;
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    background-image: linear-gradient(transparent -10%, black 1600%);
+    padding: 5px; }
   .contenidos h2 {
     text-align: center;
     font-size: 35px;
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    background-image: linear-gradient(transparent -10%, black 1600%);
+    padding: 5px; }
   .contenidos h3 {
     text-align: center;
     font-size: 25px;
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    background-image: linear-gradient(transparent -10%, black 1600%);
+    padding: 5px; }
+
+.mOwn {
+  text-align: center;
+  font-size: 18px;
+  max-width: 80%;
+  height: auto;
+  background-image: linear-gradient(#B3D8C5 -10%, black 1600%);
+  padding: 5px;
+  align-self: flex-end;
+  justify-self: flex-end; }
+
+.mCom {
+  text-align: center;
+  font-size: 18px;
+  max-width: 80%;
+  height: auto;
+  background-image: linear-gradient(#6F96B1 -10%, black 1600%);
+  padding: 5px;
+  align-self: flex-start;
+  justify-self: flex-start; }
+
+#boton1 {
+  background-image: linear-gradient(transparent -10%, black 1600%);
+  padding: 3px; }
+
+#boton2 {
+  background-image: linear-gradient(transparent -10%, black 1600%);
+  padding: 3px; }
 
 #Canales {
   background-color: #739885; }

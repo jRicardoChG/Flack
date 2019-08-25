@@ -3,6 +3,10 @@ $Color2:#739885;
 $Color3:#9DBBBB;
 $Color4:#F2F2F2;
 $Color5:#3B4C4D;
+$lightColor1:#6F96B1;
+$lightColor2:#B3D8C5;
+$DlightColor1:#4F7691;
+$DlightColor2:#93B8A5;
 
 .global
 {
@@ -13,11 +17,39 @@ $Color5:#3B4C4D;
     padding:0px;
     border-radius: 5px;
 }
+
+.white
+{
+    color:rgb(200,200,200);
+} 
+.flexMessageLeft
+{
+    display: flex;
+    flex-direction: row;
+    p
+    {
+        text-align: justify;
+        padding: 2px;
+        background-color: $lightColor1;
+    }
+}
+.flexMessageRight
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    p
+    {
+        text-align: justify;
+        padding: 2px;
+        background-color: $lightColor2;
+    }
+}
 #contenido
 {
         display: flex;
         flex-direction: column;
-    :nth-child(1)
+    div:nth-child(1)
     {
         display: flex;
         flex-direction: column;
@@ -27,11 +59,12 @@ $Color5:#3B4C4D;
             align-self: flex-start;
         }
     }
-    :nth-child(1)
+    div:nth-child(1)
     {
         #chat
         {
-            overflow: hidden;
+            overflow: scroll;
+            overflow-x: hidden;
             flex: 1 1 auto;
             width: 100%;
             align-self: center;
@@ -39,7 +72,7 @@ $Color5:#3B4C4D;
     }
     #message
     {
-        :nth-child(2)
+        div:nth-child(2)
         {
             justify-content: flex-end;
             display: flex;
@@ -79,7 +112,7 @@ section
         width:50px;
         height:50px;
     }
-    :nth-child(1)
+    div:nth-child(1)
     {
         display: flex;
         flex-direction: row;
@@ -96,6 +129,8 @@ section
         font-size: 50px;
         width: 100%;
         height: 100%;
+        background-image: linear-gradient(transparent -10%,black 1600%);
+        padding:5px;
     }
     h2
     {
@@ -103,6 +138,8 @@ section
         font-size: 35px;
         width: 100%;
         height: 100%;
+        background-image: linear-gradient(transparent -10%,black 1600%);
+        padding:5px;
     }
     h3
     {
@@ -110,7 +147,41 @@ section
         font-size: 25px;
         width: 100%;
         height: 100%;
+        background-image: linear-gradient(transparent -10%,black 1600%);
+        padding:5px;
     }
+}
+.mOwn
+{
+    text-align: center;
+    font-size: 18px;
+    max-width: 80%;
+    height: auto;
+    background-image: linear-gradient($lightColor2 -10%,black 1600%);
+    padding:5px;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+.mCom
+{
+    text-align: center;
+    font-size: 18px;
+    max-width: 80%;
+    height: auto;
+    background-image: linear-gradient($lightColor1 -10%,black 1600%);
+    padding:5px;
+    align-self: flex-start;
+    justify-self: flex-start;
+}
+#boton1
+{
+    background-image: linear-gradient(transparent -10%,black 1600%);
+    padding:3px;
+}
+#boton2
+{
+    background-image: linear-gradient(transparent -10%,black 1600%);
+    padding:3px;
 }
 
 #Canales

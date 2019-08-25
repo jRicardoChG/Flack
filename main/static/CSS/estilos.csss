@@ -1,0 +1,86 @@
+.global {
+  margin: 0px;
+  padding: 0px;
+  border-radius: 5px; }
+
+#contenido {
+  display: flex;
+  flex-direction: column;
+  background-color: #F2F2F2; }
+  #contenido :nth-child(1) {
+    display: flex;
+    flex-direction: column; }
+    #contenido :nth-child(1) #titulocanal {
+      width: 100%;
+      align-self: flex-start; }
+  #contenido :nth-child(1) #chat {
+    overflow: hidden;
+    flex: 1 1 auto;
+    width: 100%;
+    align-self: center; }
+  #contenido #message :nth-child(2) {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column; }
+    #contenido #message :nth-child(2) div {
+      width: 100%; }
+    #contenido #message :nth-child(2) button {
+      align-items: center; }
+
+section {
+  height: 100vh; }
+
+#menuPrincipal {
+  background-color: #3F5671; }
+  #menuPrincipal div {
+    display: flex;
+    flex-direction: column; }
+
+#titulo {
+  align-items: center;
+  justify-content: center; }
+  #titulo img {
+    width: 50px;
+    height: 50px; }
+  #titulo :nth-child(1) {
+    display: flex;
+    flex-direction: row; }
+
+.contenidos {
+  align-items: center;
+  justify-content: center; }
+  .contenidos h1 {
+    text-align: center;
+    font-size: 50px;
+    width: 100%;
+    height: 100%; }
+  .contenidos h2 {
+    text-align: center;
+    font-size: 35px;
+    width: 100%;
+    height: 100%; }
+  .contenidos h3 {
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+    height: 100%; }
+
+#Canales {
+  background-color: #739885; }
+  #Canales div {
+    display: flex;
+    flex-direction: column; }
+
+textarea {
+  resize: none;
+  overflow: scroll;
+  overflow-x: hidden;
+  min-height: 55px;
+  max-height: 123px; }
+
+#message {
+  height: auto;
+  width: 100%;
+  align-self: flex-end; }
+
+/*# sourceMappingURL=estilos.csss.map */

@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="../static/javascript/funciones.js" defer></script>
     <link rel="stylesheet" href="../static/CSS/estilos.css">
     <title>Document</title>
 </head>
+
 <body>
     <section class="row col-12">
         <div class="col-2" id="menuPrincipal">
             <div class="">
                 <div id="titulo">
                     <div class="">
-                            <div><img src = "../static/img/Slack_Icon.png"></div>
-                            <div><h1>FlacK</h1></div>
-                            <div><img src = "../static/img/flask-tutorial.png"></div>
+                        <div><img src="../static/img/Slack_Icon.png"></div>
+                        <div>
+                            <h1 class="white">FlacK</h1>
+                        </div>
+                        <div><img src="../static/img/flask-tutorial.png"></div>
                     </div>
                 </div>
-                <div class="contenidos"><h3>Usuario</h3></div>
-                <div class="contenidos"><h3>Amigos</h3></div>
+                <div class="contenidos">
+                    <h3 class="white">Usuario</h3>
+                </div>
+                <div class="contenidos">
+                    <h3 class="white">Amigos</h3>
+                </div>
             </div>
         </div>
         <div class="col-8" id="contenido">
@@ -29,24 +38,109 @@
                 <div id="tituloCanal" class="contenidos">
                     <h2>Channel:Este mismo</h2>
                 </div>
-                <div id="chat"></div>
-                <div id="message" class="container-flow row">
-                        <textarea class="col-11" onkeyup="auto_grow(this)"></textarea>
-                        <div class="col-1">
-                            <div><button class="btn btn-primary">Attach</button></div>
-                            <div><button class="btn btn-primary">Enviar</button></div>
+                <div id="chat">
+                    <div>
+                        <div class="flexMessageLeft">
+                            <div class="mCom">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                    eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                    expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                            </div>
                         </div>
+                        <div class="flexMessageRight">
+                                <div class="mOwn">
+                                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                        eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                        expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                                </div>
+                            </div>
+                            <div class="flexMessageLeft">
+                                <div class="mCom">
+                                    <p>Hola Ricardo como estuviste?</p>
+                                </div>
+                            </div>
+                            <div class="flexMessageRight">
+                                <div class="mOwn">
+                                    <p>Bien bien, no me quejo</p>
+                                </div>
+                            </div>
+                            <div class="flexMessageLeft">
+                                <div class="mCom">
+                                    <p>Hola Ricardo como estuviste?</p>
+                                </div>
+                            </div>
+                            <div class="flexMessageLeft">
+                                <div class="mCom">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                        eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                        expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                                </div>
+                            </div>
+                            <div class="flexMessageLeft">
+                                    <div class="mCom">
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                            eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                            expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                                    </div>
+                                </div>
+                                <div class="flexMessageRight">
+                                        <div class="mOwn">
+                                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                                eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                                expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                                        </div>
+                                    </div>
+                                    <div class="flexMessageLeft">
+                                        <div class="mCom">
+                                            <p>Hola Ricardo como estuviste?</p>
+                                        </div>
+                                    </div>
+                                    <div class="flexMessageRight">
+                                        <div class="mOwn">
+                                            <p>Bien bien, no me quejo</p>
+                                        </div>
+                                    </div>
+                                    <div class="flexMessageLeft">
+                                        <div class="mCom">
+                                            <p>Hola Ricardo como estuviste?</p>
+                                        </div>
+                                    </div>
+                                    <div class="flexMessageLeft">
+                                        <div class="mCom">
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
+                                                eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
+                                                expedita, neque dolores nemo eaque incidunt perferendis!</p>
+                                        </div>
+                                    </div>
+                            
+                    </div>
+                </div>
+                <div id="message" class="container-flow row">
+                    <textarea class="col-11" onkeyup="auto_grow(this)"></textarea>
+                    <div class="col-1">
+                        <div><button id="boton1" class="btn btn-primary contenidos">Attach</button></div>
+                        <div><button id="boton2" class="btn btn-primary contenidos">Enviar</button></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-2" id="Canales">
             <div class="col-12">
-                <div class="contenidos"><h1>Canales</h1></div>
-                <div class="contenidos"><h3>Crear Canales</h3></div>
-                <div class="contenidos"><h3>Buscar Canales</h3></div>
-                <div class="contenidos"><h3>Canales Propios</h3></div>
+                <div class="text-center">
+                    <h1>Canales</h1>
+                </div>
+                <div class="contenidos">
+                    <h3>Crear Canales</h3>
+                </div>
+                <div class="contenidos">
+                    <h3>Buscar Canales</h3>
+                </div>
+                <div class="contenidos">
+                    <h3>Canales Propios</h3>
+                </div>
             </div>
         </div>
     </section>
 </body>
+
 </html>
