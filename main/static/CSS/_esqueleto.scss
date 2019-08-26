@@ -8,69 +8,68 @@ $lightColor2:#B3D8C5;
 $DlightColor1:#4F7691;
 $DlightColor2:#93B8A5;
 
-.global
-{
+.global {
     border-width: 1px;
     border-style: dotted;
-    border-color: black; 
-    margin:0px;
-    padding:0px;
+    border-color: black;
+    margin: 0px;
+    padding: 0px;
     border-radius: 5px;
 }
-.white
-{
-    color:rgb(200,200,200);
-} 
-.flexMessageLeft
-{
+
+.white {
+    color: rgb(200, 200, 200);
+}
+
+.flexMessageLeft {
     display: flex;
     flex-direction: row;
-    p
-    {
+
+    p {
         text-align: justify;
         padding: 2px;
         background-color: $lightColor1;
     }
 }
-.flexMessageRight
-{
+
+.flexMessageRight {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    p
-    {
+
+    p {
         text-align: justify;
         padding: 2px;
         background-color: $lightColor2;
     }
 }
-#contenido
-{
+
+#contenido {
     height: 100vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    >div:nth-child(1)
-    {
+
+    >div:nth-child(1) {
         display: flex;
         flex-direction: column;
-        #titulocanal
-        {
+
+        #titulocanal {
             width: 100%;
             align-self: flex-start;
         }
     }
-    >div:nth-child(1)
-    {
+
+    >div:nth-child(1) {
         overflow: hidden;
-        #chat
-        {
+
+        #chat {
             overflow: hidden;
             flex: 1 1 auto;
             width: 98%;
             align-self: center;
-            #chatscroll
-            {
+
+            #chatscroll {
                 width: 100%;
                 overflow: scroll;
                 resize: none;
@@ -79,214 +78,273 @@ $DlightColor2:#93B8A5;
             }
         }
     }
-    #message
-    {
-        #messageSon
-        {
-            min-height: 70px;
+
+    #message {
+        #messageSon {
+            min-height: 65px;
             max-height: 150px;
             width: 100%;
             display: flex;
             flex-direction: row;
         }
-        div:nth-child(1)
-        {
+
+        div:nth-child(1) {
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
-            div
-            {
-                width:100%;
+
+            div {
+                width: 100%;
             }
-            button
-            {
+
+            button {
                 align-items: center;
             }
         }
-        div:nth-child(2)
-        {
+
+        div:nth-child(2) {
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
-            div
-            {
-                width:100%;
+
+            div {
+                width: 100%;
             }
-            button
-            {
+
+            button {
                 align-items: center;
             }
         }
     }
+
     background-color: $Color4;
 }
-section
-{
+
+section {
     height: 100vh;
 }
-#menuPrincipal
-{ 
+
+#menuPrincipal {
     background-color: $Color1;
-    div
-    {
+
+    div {
         display: flex;
         flex-direction: column;
     }
+
+    h3:hover {
+        background-color: $lightColor1;
+    }
+    #chkAmigos:not(checked)~div {
+        height: 0px;
+        overflow: hidden;
+    }
+
+    #chkAmigos:checked~div {
+        height: 300px;
+        overflow: hidden;
+    }
+    #desAmigos {
+        max-height: 300px;
+        transition: height 0.3s linear;
+        height: 0px;
+        width: 100%;
+
+        >div:nth-child(2) {
+            resize: none;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+        div div {
+            padding-left: 5px;
+        }
+    }
 }
-#titulo
-{
+
+#titulo {
     align-items: center;
     justify-content: center;
-    img
-    {
-        width:50px;
-        height:50px;
+
+    img {
+        width: 50px;
+        height: 50px;
     }
-    div:nth-child(1)
-    {
+
+    div:nth-child(1) {
         display: flex;
         flex-direction: row;
     }
 }
-.contenidos
-{
+
+.contenidos {
     align-items: center;
     justify-content: center;
-    h1
-    {
+
+    h1 {
         text-align: center;
         font-size: 50px;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(transparent -10%,black 1600%);
-        padding:5px;
+        background-image: linear-gradient(transparent -10%, black 1600%);
+        padding: 5px;
     }
-    h2
-    {
+
+    h2 {
         text-align: center;
         font-size: 35px;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(transparent -10%,black 1600%);
-        padding:5px;
+        background-image: linear-gradient(transparent -10%, black 1600%);
+        padding: 5px;
     }
-    h3
-    {
+
+    h3 {
         text-align: center;
         font-size: 25px;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(transparent -10%,black 1600%);
-        padding:5px;
+        background-image: linear-gradient(transparent -10%, black 1600%);
+        padding: 5px;
     }
 }
-.mOwn
-{
+
+.mOwn {
     text-align: center;
     font-size: 18px;
     max-width: 80%;
     height: auto;
-    background-image: linear-gradient($lightColor2 -10%,black 1600%);
-    padding:5px;
+    background-image: linear-gradient($lightColor2 -10%, black 1600%);
+    padding: 5px;
     align-self: flex-end;
     justify-self: flex-end;
 }
-.mCom
-{
+
+.mCom {
     text-align: center;
     font-size: 18px;
     max-width: 80%;
     height: auto;
-    background-image: linear-gradient($lightColor1 -10%,black 1600%);
-    padding:5px;
+    background-image: linear-gradient($lightColor1 -10%, black 1600%);
+    padding: 5px;
     align-self: flex-start;
     justify-self: flex-start;
 }
-#boton1
-{
-    background-image: linear-gradient(transparent -10%,black 1600%);
-    padding:3px;
+
+#boton1 {
+    background-image: linear-gradient(transparent -10%, black 1600%);
+    padding: 3px;
 }
-#boton2
-{
-    background-image: linear-gradient(transparent -10%,black 1600%);
-    padding:3px;
+
+#boton2 {
+    background-image: linear-gradient(transparent -10%, black 1600%);
+    padding: 3px;
 }
-#Canales
-{ 
-    h3:hover
-    {
+
+#Canales {
+    h3:hover {
         background-color: $lightColor2;
     }
-    #chkCanCrear:not(checked)~div
-    {
-        height: 80px;
-    }
-    #chkCanCrear:checked~div
-    {
-        height: 0px;
-    }
-    #chkCanPropios:not(checked)~div
-    {
-        height: 200px;
-    }
-    #chkCanPropios:checked~div
-    {
+
+    #chkCanBuscar:not(checked)~div {
         height: 0px;
         overflow: hidden;
     }
+
+    #chkCanBuscar:checked~div {
+        height: 300px;
+        overflow: hidden;
+    }
+
+    #chkCanCrear:not(checked)~div {
+        height: 0px;
+    }
+
+    #chkCanCrear:checked~div {
+        height: 80px;
+    }
+
+    #chkCanPropios:not(checked)~div {
+        height: 0px;
+        overflow: hidden;
+    }
+
+    #chkCanPropios:checked~div {
+        height: 300px;
+        overflow: hidden;
+    }
+
     background-color: $Color2;
-    div
-    {
+
+    div {
         display: flex;
         flex-direction: column;
     }
-    #canalesPropios
-    {
-        max-height: 160px;
+
+    #canalesGlobales {
+        max-height: 300px;
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
-        >div:nth-child(2)
-        {
-            resize: none; 
+
+        >div:nth-child(2) {
+            resize: none;
             overflow: scroll;
-            overflow-x:hidden;
+            overflow-x: hidden;
         }
-        div div
-        {
-            padding-left:5px;
+
+        div div {
+            padding-left: 5px;
         }
     }
-    #canalCrear
-    {
-        max-height: 160px;
+
+    #canalesPropios {
+        max-height: 300px;
+        transition: height 0.3s linear;
+        height: 0px;
+        width: 100%;
+
+        >div:nth-child(2) {
+            resize: none;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+        div div {
+            padding-left: 5px;
+        }
+    }
+
+    #canalCrear {
+        max-height: 200px;
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
         overflow: hidden;
     }
-    button
-    {
-        padding:5px;
+
+    button {
+        padding: 5px;
     }
-    input
-    {
+
+    input {
         background-color: $Color4;
     }
 }
+
 textarea {
     resize: none;
     overflow: scroll;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     min-height: 70px;
     max-height: 100%;
 }
-#message
-{
+
+#message {
     width: 100%;
     align-self: flex-end;
 }
 
-
-
+label {
+    width: 100%;
+}
