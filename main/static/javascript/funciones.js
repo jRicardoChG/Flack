@@ -1,3 +1,32 @@
+var xhr = new XMLHttpRequest();
+
+function AServer()
+{
+    var aServidor = {"saludo":"Hola jefe te puedes mover?, lo demas, el impacto... no hay nada que hacer"};
+    xhr.open("POST","/",true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Send request
+    xhr.send(Object.keys(aServidor)[0]+"="+aServidor[Object.keys(aServidor)[0]]);
+
+    xhr.onload = () => {
+        var respuesta = JSON.parse(xhr.responseText);
+        // Update the result div
+        if (respuesta) {
+            var algo = document.createElement("p")
+            algo.innerHTML = Object.keys(respuesta)[1]+": "+respuesta[Object.keys(respuesta)[1]];
+            document.body.appendChild(algo)
+        }
+        else
+        {
+          console.log("no tengo nada")  
+        }
+      }
+      return false;
+}
+
+
+
 // funcion recursiva para aplicar clase global a todos los elementos
 function recurAdd(tag) {
     var temp = document.querySelector(tag);
