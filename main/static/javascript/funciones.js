@@ -24,7 +24,30 @@ function AServer()
       }
       return false;
 }
+function comenzarSocket()
+{
+    var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port);
 
+}
+
+function socketMessage()
+{
+    //conectar con el servidor
+    var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port);
+    socket.on("connect", function(){
+        document.querySelector("#boton2").onclick = enviardatos();
+    })
+
+    function enviardatos()
+    {
+        seleccion = document.querySelector("#txtmensaje").value;
+        socket.emit("socketMessage",{"seleccion":seleccion});
+    }
+    socket.on("mensajeServer", datos => {
+        console.log(datos["seleccion"]);
+    } )
+
+}
 
 
 // funcion recursiva para aplicar clase global a todos los elementos

@@ -219,6 +219,7 @@ section {
     background-color: #F2F2F2; }
 
 textarea {
+  width: 100%;
   resize: none;
   overflow: scroll;
   overflow-x: hidden;

@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="../static/javascript/funciones.js" defer></script>
     <link rel="stylesheet" href="../static/CSS/estilos.css">
     <title>Document</title>
@@ -20,18 +21,18 @@
                     <div class="">
                         <div><img src="../static/img/Slack_Icon.png"></div>
                         <div>
-                            <h1 class="izquierda">FlacK</h1>
+                            <h1 class="izquierda white">FlacK</h1>
                         </div>
                         <div><img src="../static/img/flask-tutorial.png"></div>
                     </div>
                 </div>
                 <div class="contenidos">
-                    <h3 class="izquierda">Usuario</h3>
+                    <h3 class="izquierda white">Usuario</h3>
                 </div>
                 <div class="contenidos">
                     <input type="checkbox" id="chkAmigos" name="chkAmigos" style="display:none;">
                     <label for="chkAmigos">
-                        <h3 class="izquierda">Amigos</h3>
+                        <h3 class="izquierda white">Amigos</h3>
                     </label>
                     <div id="desAmigos">
                         <div>
@@ -70,70 +71,12 @@
                                     expedita, neque dolores nemo eaque incidunt perferendis!</p>
                             </div>
                         </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Hola Ricardo como estuviste?</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageRight">
-                            <div class="mOwn">
-                                <p>Bien bien, no me quejo</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Hola Ricardo como estuviste?</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
-                                    eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
-                                    expedita, neque dolores nemo eaque incidunt perferendis!</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
-                                    eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
-                                    expedita, neque dolores nemo eaque incidunt perferendis!</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageRight">
-                            <div class="mOwn">
-                                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
-                                    eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
-                                    expedita, neque dolores nemo eaque incidunt perferendis!</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Hola Ricardo como estuviste?</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageRight">
-                            <div class="mOwn">
-                                <p>Bien bien, no me quejo</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Hola Ricardo como estuviste?</p>
-                            </div>
-                        </div>
-                        <div class="flexMessageLeft">
-                            <div class="mCom">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur enim nisi quae
-                                    eius deleniti illum voluptatibus libero aliquam excepturi iusto quos, facilis sint
-                                    expedita, neque dolores nemo eaque incidunt perferendis!</p>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
-                <div id="message" class="container row">
+                <div id="message" class="row">
                     <div id="messageSon">
-                        <textarea class="col-11" onkeyup="auto_grow(this)"></textarea>
+                        <textarea id ="txtmensaje" class="col-11" onkeyup="auto_grow(this)"></textarea>
                         <div class="col-1">
                             <div><button id="boton1" class="btn btn-primary contenidos">Attach</button></div>
                             <div><button id="boton2" class="btn btn-primary contenidos">Enviar</button></div>
