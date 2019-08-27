@@ -29,9 +29,8 @@ def pagPrincipal():
 
 @socketio.on("socketMessage")
 def socket(datos):
-    selection = datos["seleccion"]
-    print(selection)
-    emit("mensajeServer",{"seleccion":selection},broadcast=True)
+    print(datos["seleccion"])
+    emit("mensajeServer",{"seleccion":datos["seleccion"]},broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app)
