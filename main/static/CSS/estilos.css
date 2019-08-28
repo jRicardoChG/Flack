@@ -1,4 +1,14 @@
+.timestamp {
+  font-style: italic;
+  font-size: 12px;
+  color: gray; }
+
 .global {
+  margin: 0px;
+  padding: 0px;
+  border-radius: 5px; }
+
+.globalinner {
   margin: 0px;
   padding: 0px;
   border-radius: 5px; }
