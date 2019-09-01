@@ -9,6 +9,7 @@ socket.on("connect", mensaje => {
     console.log("me he conectado");
     document.querySelector("#boton2").addEventListener("click", enviardatos);
 })
+
 // Test de coenxion con el servidor
 socket.on("testConexion", mensaje => {
     console.log(mensaje["conexion"]);
