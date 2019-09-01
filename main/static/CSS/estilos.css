@@ -176,6 +176,12 @@ section {
   background-color: #739885; }
   #Canales h3:hover {
     background-color: #B3D8C5; }
+  #Canales p:hover {
+    background-color: #93B8A5; }
+  #Canales p {
+    border-radius: 5px;
+    padding-left: 4px;
+    margin: 0px; }
   #Canales #chkCanBuscar:not(checked) ~ div {
     height: 0px;
     overflow: hidden; }

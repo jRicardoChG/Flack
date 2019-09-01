@@ -257,7 +257,14 @@ section {
     h3:hover {
         background-color: $lightColor2;
     }
-
+    p:hover{
+        background-color:$DlightColor2; 
+    }
+    p{
+        border-radius:5px;
+        padding-left:4px; 
+        margin:0px;
+    }
     #chkCanBuscar:not(checked)~div {
         height: 0px;
         overflow: hidden;

@@ -1,6 +1,6 @@
 var xhr = new XMLHttpRequest();
 var Dias = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var canalesglobales = document.querySelector("#canalesGlobales").children[1];
+var canalesGlobales = document.querySelector("#canalesGlobales").children[1];
 
 ////////////////////////////////////////////////MAIN CODE/////////////////////////////////////////////////////////////////
 // Conectar con el servidor
@@ -46,16 +46,18 @@ var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener(
 var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click",buscarCanalglobal);
 
 xhr.onreadystatechange = function(){
-    if (xhr.readyState == 4 && xhr.status==202)
+    if (xhr.readyState == 4)
     {
-        respuesta = xhr.responseText
+        var respuesta = JSON.parse(xhr.responseText);
+        console.log(respuesta);
         if (respuesta["canales"])
         {
-            for (canales in respuesta["canales"])
+            canalesGlobales.innerHTML = "";
+            for (canales of respuesta["canales"])
             {
                 var hijo = document.createElement("div");
-                hijo.innerHTML = "<p>"+canales+"</p>"
-                canalesglobales.appendChild(hijo)
+                hijo.innerHTML = "<p style='margin:0px; hover{background-color:#B3D8C5;}'>"+canales+"</p>";
+                canalesGlobales.appendChild(hijo);
             }
         }
     }

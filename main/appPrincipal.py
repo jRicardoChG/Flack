@@ -23,6 +23,8 @@ socketio = SocketIO(app)
 # En esta variable voy a guardar todos los datos de la aplicacion
 DatosApp = {"botas":{},"botines":{},"besos":{},"bufandas":{},"carros":{},"choques":{}}
 
+
+
 @app.route("/",methods=["GET","POST"])
 def pagPrincipal():
     if request.method == "POST":
@@ -38,8 +40,9 @@ def buscarGlobal():
     if request.method == "POST":
         mensaje = request.form.get("canalGlobal")
         retorno = []
+        print(mensaje)
         for llaves in DatosApp.keys():
-            if re.search('"'+mensaje+'"',llaves):
+            if re.search(mensaje,llaves):
                 retorno[len(retorno):]=[llaves]
         return jsonify({"canales":retorno})    
 
@@ -69,6 +72,8 @@ def test_connect():
 def socket(datos):
     print(datos["seleccion"])
     emit("mensajeServer",{"seleccion":datos["seleccion"]},broadcast=True)
+
+
 
 if __name__ == '__main__':
     socketio.run(app)
