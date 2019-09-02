@@ -1,6 +1,7 @@
 var xhr = new XMLHttpRequest();
 var Dias = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var canalesGlobales = document.querySelector("#canalesGlobales").children[1];
+var canalActual = document.querySelector("#tituloCanal");
 
 ////////////////////////////////////////////////MAIN CODE/////////////////////////////////////////////////////////////////
 // Conectar con el servidor
@@ -16,7 +17,7 @@ socket.on("testConexion", mensaje => {
 })
 // Cuando se envia un mensaje en el chat
 socket.on("mensajeServer", mensaje => {
-    var recibido = mensaje["seleccion"];
+    var recibido = JSON.parse(mensaje["mensaje"]);
     console.log(recibido);
     if (recibido == "" || recibido == null || recibido == undefined) {
         return;
@@ -43,27 +44,54 @@ window.addEventListener("DOMNodeInserted", function () {
     scroll.scrollTop = scroll.scrollTop + scroll.scrollHeight;
 })
 // para que al dar click se cree un canal
-var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener("click",crearCanal);
-var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click",buscarCanalglobal);
+var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener("click", crearCanal);
+var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click", buscarCanalglobal);
 
-xhr.onreadystatechange = function(){
-    if (xhr.readyState == 4)
-    {
+
+/// procesando todas las respuestas del servidor
+xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
         var respuesta = JSON.parse(xhr.responseText);
         console.log(respuesta);
-        if (respuesta["canales"])
-        {
+        if (respuesta["canales"]) {
             canalesGlobales.innerHTML = "";
-            for (canales of respuesta["canales"])
-            {
+            for (canales of respuesta["canales"]) {
                 var hijo = document.createElement("div");
-                hijo.innerHTML = "<p style='margin:0px; hover{background-color:#B3D8C5;}'>"+canales+"</p>";
+                hijo.innerHTML = "<p onclick='pedirCanal(this)' style='margin:0px; hover{background-color:#B3D8C5;}'>" + canales + "</p>";
                 canalesGlobales.appendChild(hijo);
             }
+        }
+        if (respuesta["canalDeseado"] && respuesta["propiedades"]) {
+            console.log(respuesta["canalDeseado"]);
+            console.log(respuesta["propiedades"]);
+            canalActual.innerHTML = "<h2>" + respuesta["canalDeseado"] + "</h2>";
+            localStorage.setItem("CanalActual") = respuesta["canalDeseado"];
+            // aqui tengo uqe cargar todos los mensajes que retomo de la solicitud de canal
+            let chat = document.querySelector("#chatscroll");
+            chat.innerHTML = "";
+            console.log(respuesta.propiedades.mensajes)
+            for (llave in respuesta["propiedades"]["mensajes"])
+            {
+                crearMensajeCaja(respuesta.propiedades.mensajes[llave]);
+            }
+
         }
     }
 }
 /////////////////////////////////////////////////FUNCTIONS////////////////////////////////////////////////////////////////
+
+function crearMensajeCaja(mensajeDatos)
+{
+    // creacion del mensaje propio en pantalla
+    let mensajeCaja = document.createElement("div");
+    mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
+    mensajeCaja.classList.add("flexMessageRight");
+    mensajeCaja.classList.add("global");
+    mensajeCaja.children[0].children[1].innerHTML = mensajeDatos.txtMensaje;
+    let chat = document.querySelector("#chatscroll");
+    mensajeCaja.children[0].children[0].innerHTML = mensajeDatos.timeStamp + mensajeDatos.dueno;
+    chat.appendChild(mensajeCaja);
+}
 
 // Pruebas de peticiones AJAX con servidor
 function AServer() {
@@ -78,7 +106,7 @@ function AServer() {
         var respuesta = JSON.parse(xhr.responseText);
         // Update the result div
         if (respuesta) {
-            console.log("ServerContesta: "+respuesta);
+            console.log("ServerContesta: " + respuesta);
         }
         else {
             console.log("no tengo nada")
@@ -132,21 +160,19 @@ function divUsuario() {
 // Peticion para crear una room
 function crearCanal() {
     var nombreCanal = document.querySelector("#newChan");
-    if(nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null)
-    {
+    if (nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null) {
         xhr.open("POST", "/crearCanal", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("nuevoCanal="+nombreCanal.value+"&dueno="+localStorage.getItem("usuarioActual"));
+        xhr.send("nuevoCanal=" + nombreCanal.value + "&dueno=" + localStorage.getItem("usuarioActual"));
     }
 }
 // peticion para buscar todos los canales existentes
-function buscarCanalglobal(){
+function buscarCanalglobal() {
     var nombreCanal = document.querySelector("#buscarCanalGlobal");
-    if(nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null)
-    {
+    if (nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null) {
         xhr.open("POST", "/buscarCanalGlobal", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("canalGlobal="+nombreCanal.value);
+        xhr.send("canalGlobal=" + nombreCanal.value);
     }
     else
         return;
@@ -162,8 +188,6 @@ function enviardatos() {
     else {
         // crea nuevo objeto fecha actualizado
         var fecha = new Date();
-        // emit de los datos
-        socket.emit("socketMessage", { "seleccion": seleccion.value });
         // creacion del mensaje propio en pantalla
         let mensajeCaja = document.createElement("div");
         mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
@@ -171,13 +195,23 @@ function enviardatos() {
         mensajeCaja.classList.add("global");
         mensajeCaja.children[0].children[1].innerHTML = seleccion.value;
         let chat = document.querySelector("#chatscroll");
-
-        mensajeCaja.children[0].children[0].innerHTML = Dias[fecha.getDay()] + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds() + " " + localStorage.getItem("usuarioActual");
+        var timeStampActual = Dias[fecha.getDay()] + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+        mensajeCaja.children[0].children[0].innerHTML = timeStampActual + " " + localStorage.getItem("usuarioActual");
         chat.appendChild(mensajeCaja);
+        // emit de los datos
+        socket.emit("socketMessage", { "mensaje": seleccion.value,"dueno":localStorage.getItem("usuarioActual"),"timeStamp": timeStampActual });
         seleccion.value = "";
+
     }
 }
 
+// pedir canal especifico al servidor
+function pedirCanal(element) {
+    var canalAPedir = element.innerHTML;
+    xhr.open("POST", "/pedirCanal", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("canalDeseado=" + canalAPedir);
+}
 
 
 //ejecucion inmediata de funciones

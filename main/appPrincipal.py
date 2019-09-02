@@ -18,11 +18,11 @@ Session(app)
 # confiugrar socketio
 app.config["SECRET_KEY"] = "secretisima!"
 socketio = SocketIO(app)
-###############################################################################################################
+
+##############################################################################################################################
 
 # En esta variable voy a guardar todos los datos de la aplicacion
-DatosApp = {"botas":{},"botines":{},"besos":{},"bufandas":{},"carros":{},"choques":{}}
-
+DatosApp = {"botas":{"dueno":"RicardoChavez","mensajes":{"mensaje1":{"dueno":"Karin","timeStamp":"laquesea","txtMensaje":"severo todo es muy bonito"},"mensaje2":{"dueno":"Pedro","timeStamp":"laqueseap","txtMensaje":"severo pppp"},"mensaje2":{"dueno":"Carlos","timeStamp":"laqueseac","txtMensaje":"severo todo es muy bonitoccccccc"},"mensaje3":{"dueno":"Karine","timeStamp":"laqueseaeeee","txtMensaje":"severo todo es muy bonitoeeeeeee"},"mensaje4":{"dueno":"Karini","timeStamp":"laqueseaiiiii","txtMensaje":"severo todo es muy bonitoiiiiiii"}}},"botines":{},"buenas":{},"bestias":{},"burritos":{},"carros":{}}
 
 
 @app.route("/",methods=["GET","POST"])
@@ -62,6 +62,16 @@ def crearCanal():
 
 
 
+@app.route("/pedirCanal",methods=["POST"])
+def canalPedido():
+    if request.method == "POST":
+        tempCanal = request.form.get("canalDeseado")
+        return jsonify({"canalDeseado":tempCanal,"propiedades":DatosApp[tempCanal]})
+    else:
+        return jsonify({"respuesta":"no tengo nada"})
+
+
+
 @socketio.on("connect")
 def test_connect():
     emit("testConexion",{"conexion":"Te has conectado, te he detectado pasame tu room actual"})
@@ -70,8 +80,9 @@ def test_connect():
 
 @socketio.on("socketMessage")
 def socket(datos):
-    print(datos["seleccion"])
-    emit("mensajeServer",{"seleccion":datos["seleccion"]},broadcast=True)
+    print(datos["mensaje"])
+    DatosApp[]
+    emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["mensaje"]["timeStamp"],"dueno":datos["mensaje"]["dueno"]},broadcast=True)
 
 
 
