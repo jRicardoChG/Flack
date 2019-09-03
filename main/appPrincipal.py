@@ -22,7 +22,8 @@ socketio = SocketIO(app)
 ##############################################################################################################################
 
 # En esta variable voy a guardar todos los datos de la aplicacion
-DatosApp = {"botas":{"dueno":"RicardoChavez","mensajes":{"mensaje1":{"dueno":"Karin","timeStamp":"laquesea","txtMensaje":"severo todo es muy bonito"},"mensaje2":{"dueno":"Pedro","timeStamp":"laqueseap","txtMensaje":"severo pppp"},"mensaje2":{"dueno":"Carlos","timeStamp":"laqueseac","txtMensaje":"severo todo es muy bonitoccccccc"},"mensaje3":{"dueno":"Karine","timeStamp":"laqueseaeeee","txtMensaje":"severo todo es muy bonitoeeeeeee"},"mensaje4":{"dueno":"Karini","timeStamp":"laqueseaiiiii","txtMensaje":"severo todo es muy bonitoiiiiiii"}}},"botines":{},"buenas":{},"bestias":{},"burritos":{},"carros":{}}
+DatosApp = {"botas":{"dueno":"RicardoChavez","mensajes":{"1":{"dueno":"Karin","timeStamp":"laquesea","txtMensaje":"severo todo es muy bonito"},"2":{"dueno":"Pedro","timeStamp":"laqueseap","txtMensaje":"severo pppp"},"3":{"dueno":"Carlos","timeStamp":"laqueseac","txtMensaje":"severo todo es muy bonitoccccccc"},"4":{"dueno":"Karine","timeStamp":"laqueseaeeee","txtMensaje":"severo todo es muy bonitoeeeeeee"},"5":{"dueno":"Karini","timeStamp":"laqueseaiiiii","txtMensaje":"severo todo es muy bonitoiiiiiii"}}},"botines":{},"buenas":{},"bestias":{},"burritos":{},"carros":{}}
+
 
 
 @app.route("/",methods=["GET","POST"])
@@ -80,9 +81,17 @@ def test_connect():
 
 @socketio.on("socketMessage")
 def socket(datos):
-    print(datos["mensaje"])
-    DatosApp[]
-    emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["mensaje"]["timeStamp"],"dueno":datos["mensaje"]["dueno"]},broadcast=True)
+    messagesRoom = list(DatosApp[datos["room"]]["mensajes"])
+    messageslenght = len(list(DatosApp[datos["room"]]["mensajes"]))
+    if(messageslenght == 100):
+        DatosApp[datos["room"]]["mensajes"].pop("1")
+    for llave in range(1,messageslenght):
+        DatosApp[datos["room"]]["mensajes"][llave] = llave
+        
+    print("asi quedan los mensajes lsitdos:",messages)
+    print(datos)
+    DatosApp[datos["room"]]
+    emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["timeStamp"],"dueno":datos["dueno"]},broadcast=True)
 
 
 

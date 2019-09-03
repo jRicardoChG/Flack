@@ -65,11 +65,12 @@ xhr.onreadystatechange = function () {
             console.log(respuesta["canalDeseado"]);
             console.log(respuesta["propiedades"]);
             canalActual.innerHTML = "<h2>" + respuesta["canalDeseado"] + "</h2>";
-            localStorage.setItem("CanalActual") = respuesta["canalDeseado"];
+            localStorage.setItem("canalActual",respuesta["canalDeseado"]);
+            localStorage.setItem("propiedades",JSON.stringify(respuesta["propiedades"]));
+            disableTextArea();
             // aqui tengo uqe cargar todos los mensajes que retomo de la solicitud de canal
             let chat = document.querySelector("#chatscroll");
             chat.innerHTML = "";
-            console.log(respuesta.propiedades.mensajes)
             for (llave in respuesta["propiedades"]["mensajes"])
             {
                 crearMensajeCaja(respuesta.propiedades.mensajes[llave]);
@@ -157,6 +158,34 @@ function divUsuario() {
     }
 }
 
+// funcion para deshabilitar textarea si no existe un canal elegido en localsotrage
+function disableTextArea()
+{
+    if(localStorage.getItem("canalActual")==null || localStorage.getItem("canalActual")==undefined || localStorage.getItem("canalActual")=="")
+    {
+        var botonAttached = document.querySelector("#boton1");
+        var botonEnviar = document.querySelector("#boton2");
+        botonEnviar.setAttribute("disabled","true");
+        botonAttached.setAttribute("disabled","true");
+    }
+    else
+    {
+        let chat = document.querySelector("#chatscroll");
+        chat.innerHTML = "";
+        canalActual.innerHTML = "<h2>" + localStorage.getItem("canalActual") + "</h2>";
+        var mensajesCanalPrevio = JSON.parse(localStorage.getItem("propiedades"));
+        for (llave in mensajesCanalPrevio["mensajes"])
+        {
+            crearMensajeCaja(mensajesCanalPrevio.mensajes[llave]);
+        }
+        var botonAttached = document.querySelector("#boton1");
+        var botonEnviar = document.querySelector("#boton2");
+        botonEnviar.removeAttribute("disabled");
+        botonAttached.removeAttribute("disabled");
+
+    }
+}
+
 // Peticion para crear una room
 function crearCanal() {
     var nombreCanal = document.querySelector("#newChan");
@@ -182,7 +211,8 @@ function buscarCanalglobal() {
 // Realizar el socket.emit con lo que tiene el text area si no esta nulo
 function enviardatos() {
     var seleccion = document.querySelector("#txtmensaje");
-    if (seleccion.value == "" || seleccion.value == null || seleccion.value == undefined) {
+    var botonEnviar = document.querySelector("#boton1");
+    if (seleccion.value == "" || seleccion.value == null || seleccion.value == undefined || botonEnviar.disabled==true ) {
         return;
     }
     else {
@@ -199,7 +229,7 @@ function enviardatos() {
         mensajeCaja.children[0].children[0].innerHTML = timeStampActual + " " + localStorage.getItem("usuarioActual");
         chat.appendChild(mensajeCaja);
         // emit de los datos
-        socket.emit("socketMessage", { "mensaje": seleccion.value,"dueno":localStorage.getItem("usuarioActual"),"timeStamp": timeStampActual });
+        socket.emit("socketMessage", { "mensaje": seleccion.value,"dueno":localStorage.getItem("usuarioActual"),"timeStamp": timeStampActual,"room":localStorage.getItem("canalActual") });
         seleccion.value = "";
 
     }
@@ -217,4 +247,4 @@ function pedirCanal(element) {
 //ejecucion inmediata de funciones
 recurAdd("html");
 divUsuario();
-
+disableTextArea();
