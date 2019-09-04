@@ -8,6 +8,7 @@ var canalActual = document.querySelector("#tituloCanal");
 var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port);
 socket.on("connect", mensaje => {
     console.log("me he conectado");
+    console.log("datos de conexion:",mensaje)
     document.querySelector("#boton2").addEventListener("click", enviardatos);
 })
 
@@ -17,17 +18,25 @@ socket.on("testConexion", mensaje => {
 })
 // Cuando se envia un mensaje en el chat
 socket.on("mensajeServer", mensaje => {
-    var recibido = JSON.parse(mensaje["mensaje"]);
+    recibido = mensaje;
     console.log(recibido);
     if (recibido == "" || recibido == null || recibido == undefined) {
         return;
     }
     else {
         let mensajeCaja = document.createElement("div");
-        mensajeCaja.innerHTML = '<div class="mCom global"><p class="global"></p></div>';
-        mensajeCaja.classList.add("flexMessageLeft");
+        if (recibido["dueno"] == localStorage.getItem("usuarioActual"))
+        {
+            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global"></p></div>';
+            mensajeCaja.classList.add("flexMessageRight");
+        }
+        else
+        {
+            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global"></p></div>';
+            mensajeCaja.classList.add("flexMessageLeft");
+        }  
         mensajeCaja.classList.add("global");
-        mensajeCaja.children[0].children[0].innerHTML = recibido;
+        mensajeCaja.children[0].children[0].innerHTML = recibido["mensaje"];
         let chat = document.querySelector("#chatscroll");
         chat.appendChild(mensajeCaja);
     }
@@ -52,7 +61,7 @@ var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEvent
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
         var respuesta = JSON.parse(xhr.responseText);
-        console.log(respuesta);
+        console.log("respuesta del servidor: "+respuesta);
         if (respuesta["canales"]) {
             canalesGlobales.innerHTML = "";
             for (canales of respuesta["canales"]) {
@@ -62,8 +71,8 @@ xhr.onreadystatechange = function () {
             }
         }
         if (respuesta["canalDeseado"] && respuesta["propiedades"]) {
-            console.log(respuesta["canalDeseado"]);
-            console.log(respuesta["propiedades"]);
+            console.log("respuesta del servidor a solicitud de canal: "+respuesta["canalDeseado"]);
+            console.log("respuesta del servidor a solicitud de canal: ",respuesta["propiedades"]);
             canalActual.innerHTML = "<h2>" + respuesta["canalDeseado"] + "</h2>";
             localStorage.setItem("canalActual",respuesta["canalDeseado"]);
             localStorage.setItem("propiedades",JSON.stringify(respuesta["propiedades"]));
@@ -71,11 +80,12 @@ xhr.onreadystatechange = function () {
             // aqui tengo uqe cargar todos los mensajes que retomo de la solicitud de canal
             let chat = document.querySelector("#chatscroll");
             chat.innerHTML = "";
-            for (llave in respuesta["propiedades"]["mensajes"])
+            for (i=0;i<respuesta.propiedades.mensajes.length;i++)
             {
-                crearMensajeCaja(respuesta.propiedades.mensajes[llave]);
+                console.log("estoy imprimiendo mensjaes del canal recien solicitado")
+                console.log(respuesta.propiedades.mensajes[i])
+                crearMensajeCaja(respuesta.propiedades.mensajes[i]);
             }
-
         }
     }
 }
@@ -85,12 +95,20 @@ function crearMensajeCaja(mensajeDatos)
 {
     // creacion del mensaje propio en pantalla
     let mensajeCaja = document.createElement("div");
-    mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
-    mensajeCaja.classList.add("flexMessageRight");
+    if (mensajeDatos["dueno"] == localStorage.getItem("usuarioActual"))
+    {
+        mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.classList.add("flexMessageRight");
+    }
+    else
+    {
+        mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.classList.add("flexMessageLeft");
+    }  
     mensajeCaja.classList.add("global");
-    mensajeCaja.children[0].children[1].innerHTML = mensajeDatos.txtMensaje;
     let chat = document.querySelector("#chatscroll");
     mensajeCaja.children[0].children[0].innerHTML = mensajeDatos.timeStamp + mensajeDatos.dueno;
+    mensajeCaja.children[0].children[1].innerHTML = mensajeDatos.txtMessage;
     chat.appendChild(mensajeCaja);
 }
 
@@ -219,15 +237,15 @@ function enviardatos() {
         // crea nuevo objeto fecha actualizado
         var fecha = new Date();
         // creacion del mensaje propio en pantalla
-        let mensajeCaja = document.createElement("div");
-        mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
-        mensajeCaja.classList.add("flexMessageRight");
-        mensajeCaja.classList.add("global");
-        mensajeCaja.children[0].children[1].innerHTML = seleccion.value;
-        let chat = document.querySelector("#chatscroll");
+        // let mensajeCaja = document.createElement("div");
+        // mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
+        // mensajeCaja.classList.add("flexMessageRight");
+        // mensajeCaja.classList.add("global");
+        // mensajeCaja.children[0].children[1].innerHTML = seleccion.value;
+        // let chat = document.querySelector("#chatscroll");
         var timeStampActual = Dias[fecha.getDay()] + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-        mensajeCaja.children[0].children[0].innerHTML = timeStampActual + " " + localStorage.getItem("usuarioActual");
-        chat.appendChild(mensajeCaja);
+        // mensajeCaja.children[0].children[0].innerHTML = timeStampActual + " " + localStorage.getItem("usuarioActual");
+        // chat.appendChild(mensajeCaja);
         // emit de los datos
         socket.emit("socketMessage", { "mensaje": seleccion.value,"dueno":localStorage.getItem("usuarioActual"),"timeStamp": timeStampActual,"room":localStorage.getItem("canalActual") });
         seleccion.value = "";
@@ -241,6 +259,7 @@ function pedirCanal(element) {
     xhr.open("POST", "/pedirCanal", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("canalDeseado=" + canalAPedir);
+    socket.emit("join",{"canalAUnir":canalAPedir});
 }
 
 

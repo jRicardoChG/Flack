@@ -6,7 +6,7 @@ import re
 from funciones          import organizar
 from flask              import Flask, session,render_template,request,jsonify
 from flask_session      import Session
-from flask_socketio     import SocketIO, emit
+from flask_socketio     import SocketIO, emit, join_room,leave_room
 
 ###########################################CODIGO CONFIGURACION###############################################################
 app = Flask(__name__)
@@ -22,7 +22,7 @@ socketio = SocketIO(app)
 ##############################################################################################################################
 
 # En esta variable voy a guardar todos los datos de la aplicacion
-DatosApp = {"botas":{"dueno":"RicardoChavez","mensajes":{"1":{"dueno":"Karin","timeStamp":"laquesea","txtMensaje":"severo todo es muy bonito"},"2":{"dueno":"Pedro","timeStamp":"laqueseap","txtMensaje":"severo pppp"},"3":{"dueno":"Carlos","timeStamp":"laqueseac","txtMensaje":"severo todo es muy bonitoccccccc"},"4":{"dueno":"Karine","timeStamp":"laqueseaeeee","txtMensaje":"severo todo es muy bonitoeeeeeee"},"5":{"dueno":"Karini","timeStamp":"laqueseaiiiii","txtMensaje":"severo todo es muy bonitoiiiiiii"}}},"botines":{},"buenas":{},"bestias":{},"burritos":{},"carros":{}}
+DatosApp = {"botas":{"dueno":"RicardoChavez","mensajes":[]},"botines":{"dueno":"beto","mensajes":[]},"buenas":{"dueno":"coso","mensajes":[]},"bestias":{"dueno":"beth","mensajes":[]},"burritos":{"dueno":"vez","mensajes":[]},"carros":{"dueno":"Ric","mensajes":[]}}
 
 
 
@@ -56,6 +56,7 @@ def crearCanal():
         if (temproom not in DatosApp.keys()):
             DatosApp[temproom] = {}
             DatosApp[temproom]["dueno"] = request.form.get("dueno")
+            DatosApp[temproom]["mensajes"] = []
             print(DatosApp)
             return jsonify({"respuesta":"se ha creado  una room"})
         else:
@@ -81,18 +82,16 @@ def test_connect():
 
 @socketio.on("socketMessage")
 def socket(datos):
-    messagesRoom = list(DatosApp[datos["room"]]["mensajes"])
-    messageslenght = len(list(DatosApp[datos["room"]]["mensajes"]))
-    if(messageslenght == 100):
-        DatosApp[datos["room"]]["mensajes"].pop("1")
-    for llave in range(1,messageslenght):
-        DatosApp[datos["room"]]["mensajes"][llave] = llave
-        
-    print("asi quedan los mensajes lsitdos:",messages)
     print(datos)
-    DatosApp[datos["room"]]
-    emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["timeStamp"],"dueno":datos["dueno"]},broadcast=True)
+    longitud = len(DatosApp[datos["room"]]["mensajes"])
+    DatosApp[datos["room"]]["mensajes"][longitud:] = [{"dueno":datos["dueno"],"timeStamp":datos["timeStamp"],"txtMessage":datos["mensaje"]}] 
+    print(DatosApp[datos["room"]]["mensajes"])
+    emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["timeStamp"],"dueno":datos["dueno"]},room = datos["room"])
 
+@socket.on("join")
+def uniraRoom(datos):
+        join_room(datos["canalAUnir"])
+        emit()
 
 
 if __name__ == '__main__':
