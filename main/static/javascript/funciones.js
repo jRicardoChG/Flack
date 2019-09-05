@@ -12,6 +12,11 @@ socket.on("connect", mensaje => {
     document.querySelector("#boton2").addEventListener("click", enviardatos);
 })
 
+// verificar union  ala room
+socket.on("respuestaServer", mensaje => {
+    console.log("me confirmas que me conecte ala room: ",Object.keys(mensaje)[0],mensaje[Object.keys(mensaje)[0]]);
+})
+
 // Test de coenxion con el servidor
 socket.on("testConexion", mensaje => {
     console.log(mensaje["conexion"]);
@@ -27,18 +32,21 @@ socket.on("mensajeServer", mensaje => {
         let mensajeCaja = document.createElement("div");
         if (recibido["dueno"] == localStorage.getItem("usuarioActual"))
         {
-            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global"></p></div>';
+            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
             mensajeCaja.classList.add("flexMessageRight");
         }
         else
         {
-            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global"></p></div>';
+            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p></div>';
             mensajeCaja.classList.add("flexMessageLeft");
         }  
         mensajeCaja.classList.add("global");
         mensajeCaja.children[0].children[0].innerHTML = recibido["mensaje"];
         let chat = document.querySelector("#chatscroll");
+        mensajeCaja.children[0].children[0].innerHTML = recibido.timeStamp + recibido.dueno;
+        mensajeCaja.children[0].children[1].innerHTML = recibido.mensaje;
         chat.appendChild(mensajeCaja);
+
     }
 })
 // Para poder enviar datos con enter
@@ -75,7 +83,7 @@ xhr.onreadystatechange = function () {
             console.log("respuesta del servidor a solicitud de canal: ",respuesta["propiedades"]);
             canalActual.innerHTML = "<h2>" + respuesta["canalDeseado"] + "</h2>";
             localStorage.setItem("canalActual",respuesta["canalDeseado"]);
-            localStorage.setItem("propiedades",JSON.stringify(respuesta["propiedades"]));
+            // localStorage.setItem("propiedades",JSON.stringify(respuesta["propiedades"]));
             disableTextArea();
             // aqui tengo uqe cargar todos los mensajes que retomo de la solicitud de canal
             let chat = document.querySelector("#chatscroll");
@@ -86,6 +94,10 @@ xhr.onreadystatechange = function () {
                 console.log(respuesta.propiedades.mensajes[i])
                 crearMensajeCaja(respuesta.propiedades.mensajes[i]);
             }
+        }
+        if (respuesta["respuesta"])
+        {
+            console.log(respuesta["respuesta"])
         }
     }
 }
@@ -191,16 +203,11 @@ function disableTextArea()
         let chat = document.querySelector("#chatscroll");
         chat.innerHTML = "";
         canalActual.innerHTML = "<h2>" + localStorage.getItem("canalActual") + "</h2>";
-        var mensajesCanalPrevio = JSON.parse(localStorage.getItem("propiedades"));
-        for (llave in mensajesCanalPrevio["mensajes"])
-        {
-            crearMensajeCaja(mensajesCanalPrevio.mensajes[llave]);
-        }
         var botonAttached = document.querySelector("#boton1");
         var botonEnviar = document.querySelector("#boton2");
         botonEnviar.removeAttribute("disabled");
         botonAttached.removeAttribute("disabled");
-
+        socket.emit("join",{"canalAUnir":localStorage.getItem("canalActual")})
     }
 }
 
@@ -256,10 +263,27 @@ function enviardatos() {
 // pedir canal especifico al servidor
 function pedirCanal(element) {
     var canalAPedir = element.innerHTML;
+    var canalADejar = localStorage.getItem("canalActual");
     xhr.open("POST", "/pedirCanal", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("canalDeseado=" + canalAPedir);
     socket.emit("join",{"canalAUnir":canalAPedir});
+    socket.emit("leave",{"canalADejar":canalADejar});
+    xhr.send("canalDeseado=" + canalAPedir);
+}
+
+function PedirCanalAlVolver()
+{
+    if(localStorage.getItem("canalActual")==null || localStorage.getItem("canalActual")==undefined || localStorage.getItem("canalActual")=="")
+    {
+        return;
+    }
+    else
+    {
+        xhr.open("POST", "/pedirCanal", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("canalDeseado=" + localStorage.getItem("canalActual"));
+    }
+    
 }
 
 
@@ -267,3 +291,4 @@ function pedirCanal(element) {
 recurAdd("html");
 divUsuario();
 disableTextArea();
+PedirCanalAlVolver();

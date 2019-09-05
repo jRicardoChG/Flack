@@ -88,11 +88,19 @@ def socket(datos):
     print(DatosApp[datos["room"]]["mensajes"])
     emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["timeStamp"],"dueno":datos["dueno"]},room = datos["room"])
 
-@socket.on("join")
-def uniraRoom(datos):
-        join_room(datos["canalAUnir"])
-        emit()
 
+
+@socketio.on("join")
+def uniraRoom(datos):
+    join_room(datos["canalAUnir"])
+    emit("respuestaServer",{"actualmente te has unido a una room llamada: ":datos["canalAUnir"]},room = datos["canalAUnir"])
+
+
+
+@socketio.on("leave")
+def dejarRoom(datos):
+    leave_room(datos["canalADejar"])
+    return jsonify({"respuesta":"Has abandonado la Room"})
 
 if __name__ == '__main__':
     socketio.run(app)
