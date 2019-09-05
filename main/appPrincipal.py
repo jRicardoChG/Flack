@@ -49,6 +49,20 @@ def buscarGlobal():
 
 
 
+@app.route("/buscarCanalPropio",methods=["POST"])
+def buscarPropio():
+    if request.method == "POST":
+        mensaje = request.form.get("canalPropio")
+        dueno = request.form.get("dueno")
+        retorno = []
+        print("me han pedido buscar en canales propios:" + mensaje)
+        for llaves in DatosApp.keys():
+            if DatosApp[llaves]["dueno"]==dueno:
+                retorno[len(retorno):]=[llaves]
+        return jsonify({"canalesPropios":retorno})   
+
+
+
 @app.route("/crearCanal",methods=["POST"])
 def crearCanal():
     if request.method == "POST":

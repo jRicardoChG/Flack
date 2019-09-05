@@ -22,7 +22,7 @@
   .flexMessageLeft p {
     text-align: justify;
     padding: 2px;
-    background-color: #6F96B1; }
+    background-color: #8FB6D1; }
 
 .flexMessageRight {
   display: flex;
@@ -31,7 +31,7 @@
   .flexMessageRight p {
     text-align: justify;
     padding: 2px;
-    background-color: #B3D8C5; }
+    background-color: #C3E8D5; }
 
 #contenido {
   height: 100vh;
@@ -90,7 +90,7 @@ section {
     display: flex;
     flex-direction: column; }
   #menuPrincipal h3:hover {
-    background-color: #6F96B1; }
+    background-color: #8FB6D1; }
   #menuPrincipal #chkAmigos:not(checked) ~ div {
     height: 0px;
     overflow: hidden; }
@@ -149,7 +149,7 @@ section {
   font-size: 18px;
   max-width: 80%;
   height: auto;
-  background-image: linear-gradient(#B3D8C5 -10%, black 1600%);
+  background-image: linear-gradient(#C3E8D5 -10%, black 1600%);
   padding: 5px;
   align-self: flex-end;
   justify-self: flex-end; }
@@ -159,7 +159,7 @@ section {
   font-size: 18px;
   max-width: 80%;
   height: auto;
-  background-image: linear-gradient(#6F96B1 -10%, black 1600%);
+  background-image: linear-gradient(#8FB6D1 -10%, black 1600%);
   padding: 5px;
   align-self: flex-start;
   justify-self: flex-start; }
@@ -175,7 +175,7 @@ section {
 #Canales {
   background-color: #739885; }
   #Canales h3:hover {
-    background-color: #B3D8C5; }
+    background-color: #C3E8D5; }
   #Canales p:hover {
     background-color: #93B8A5; }
   #Canales p {
@@ -186,7 +186,7 @@ section {
     height: 0px;
     overflow: hidden; }
   #Canales #chkCanBuscar:checked ~ div {
-    height: 300px;
+    height: 170px;
     overflow: hidden; }
   #Canales #chkCanCrear:not(checked) ~ div {
     height: 0px; }
@@ -196,13 +196,13 @@ section {
     height: 0px;
     overflow: hidden; }
   #Canales #chkCanPropios:checked ~ div {
-    height: 300px;
+    height: 170px;
     overflow: hidden; }
   #Canales div {
     display: flex;
     flex-direction: column; }
   #Canales #canalesGlobales {
-    max-height: 300px;
+    max-height: 170px;
     transition: height 0.3s linear;
     height: 0px;
     width: 100%; }
@@ -213,7 +213,7 @@ section {
     #Canales #canalesGlobales div div {
       padding-left: 5px; }
   #Canales #canalesPropios {
-    max-height: 300px;
+    max-height: 170px;
     transition: height 0.3s linear;
     height: 0px;
     width: 100%; }
@@ -224,7 +224,7 @@ section {
     #Canales #canalesPropios div div {
       padding-left: 5px; }
   #Canales #canalCrear {
-    max-height: 200px;
+    max-height: 170px;
     transition: height 0.3s linear;
     height: 0px;
     width: 100%;

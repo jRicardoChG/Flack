@@ -1,6 +1,7 @@
 var xhr = new XMLHttpRequest();
 var Dias = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var canalesGlobales = document.querySelector("#canalesGlobales").children[1];
+var canalesPropiosdiv = document.querySelector("#canalesPropios").children[1];
 var canalActual = document.querySelector("#tituloCanal");
 
 ////////////////////////////////////////////////MAIN CODE/////////////////////////////////////////////////////////////////
@@ -43,7 +44,7 @@ socket.on("mensajeServer", mensaje => {
         mensajeCaja.classList.add("global");
         mensajeCaja.children[0].children[0].innerHTML = recibido["mensaje"];
         let chat = document.querySelector("#chatscroll");
-        mensajeCaja.children[0].children[0].innerHTML = recibido.timeStamp + recibido.dueno;
+        mensajeCaja.children[0].children[0].innerHTML = recibido.timeStamp +" "+ recibido.dueno;
         mensajeCaja.children[0].children[1].innerHTML = recibido.mensaje;
         chat.appendChild(mensajeCaja);
 
@@ -63,7 +64,7 @@ window.addEventListener("DOMNodeInserted", function () {
 // para que al dar click se cree un canal
 var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener("click", crearCanal);
 var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click", buscarCanalglobal);
-
+var botonBuscarCanalPropio = document.querySelector("#btnBuscarCanalPropios").addEventListener("click", buscarCanalPropio);
 
 /// procesando todas las respuestas del servidor
 xhr.onreadystatechange = function () {
@@ -78,6 +79,16 @@ xhr.onreadystatechange = function () {
                 canalesGlobales.appendChild(hijo);
             }
         }
+        if (respuesta["canalesPropios"]) {
+            console.log("he recibido una repsuesta de propios: ",respuesta["canalesPropios"])
+            canalesPropiosdiv.innerHTML = "";
+            for (canales of respuesta["canalesPropios"]) {
+                var hijo = document.createElement("div");
+                hijo.innerHTML = "<p onclick='pedirCanal(this)' style='margin:0px; hover{background-color:#B3D8C5;}'>" + canales + "</p>";
+                canalesPropiosdiv.appendChild(hijo);
+            }
+        }
+
         if (respuesta["canalDeseado"] && respuesta["propiedades"]) {
             console.log("respuesta del servidor a solicitud de canal: "+respuesta["canalDeseado"]);
             console.log("respuesta del servidor a solicitud de canal: ",respuesta["propiedades"]);
@@ -94,10 +105,6 @@ xhr.onreadystatechange = function () {
                 console.log(respuesta.propiedades.mensajes[i])
                 crearMensajeCaja(respuesta.propiedades.mensajes[i]);
             }
-        }
-        if (respuesta["respuesta"])
-        {
-            console.log(respuesta["respuesta"])
         }
     }
 }
@@ -119,7 +126,7 @@ function crearMensajeCaja(mensajeDatos)
     }  
     mensajeCaja.classList.add("global");
     let chat = document.querySelector("#chatscroll");
-    mensajeCaja.children[0].children[0].innerHTML = mensajeDatos.timeStamp + mensajeDatos.dueno;
+    mensajeCaja.children[0].children[0].innerHTML = mensajeDatos.timeStamp +" "+ mensajeDatos.dueno;
     mensajeCaja.children[0].children[1].innerHTML = mensajeDatos.txtMessage;
     chat.appendChild(mensajeCaja);
 }
@@ -232,11 +239,26 @@ function buscarCanalglobal() {
         return;
 }
 
+function buscarCanalPropio() {
+    var nombreCanal = document.querySelector("#buscarCanalPropios");
+    if (nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null) {
+        xhr.open("POST", "/buscarCanalPropio", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("canalPropio=" + nombreCanal.value+"&dueno="+localStorage.getItem("usuarioActual"));
+    }
+    else
+        return;
+}
 
 // Realizar el socket.emit con lo que tiene el text area si no esta nulo
 function enviardatos() {
     var seleccion = document.querySelector("#txtmensaje");
+    console.log("esto tomo del textarea",seleccion.value);
     var botonEnviar = document.querySelector("#boton1");
+    if(verificarSoloEspacios(seleccion.value))
+    {
+        return;
+    }
     if (seleccion.value == "" || seleccion.value == null || seleccion.value == undefined || botonEnviar.disabled==true ) {
         return;
     }
@@ -286,6 +308,27 @@ function PedirCanalAlVolver()
     
 }
 
+// funcion para verificar que el textarea no esta lleno de epsaicos
+function verificarSoloEspacios(txtString)
+{
+    Split = txtString.split("");
+    while(Split[0]=="" || Split[0]==" " || Split[0].charCodeAt()==10)
+    {
+        Split.shift();
+        if(Split.toString()==[])
+            break;
+    }
+    if (Split.length >=1)
+    {
+        console.log(Split, false);
+        return false;
+    }
+    else
+    {
+        console.log(Split,true);
+        return true;
+    }
+}
 
 //ejecucion inmediata de funciones
 recurAdd("html");

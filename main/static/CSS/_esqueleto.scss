@@ -3,8 +3,8 @@ $Color2:#739885;
 $Color3:#9DBBBB;
 $Color4:#F2F2F2;
 $Color5:#3B4C4D;
-$lightColor1:#6F96B1;
-$lightColor2:#B3D8C5;
+$lightColor1:#8FB6D1;
+$lightColor2:#C3E8D5;
 $DlightColor1:#4F7691;
 $DlightColor2:#93B8A5;
 
@@ -271,7 +271,7 @@ section {
     }
 
     #chkCanBuscar:checked~div {
-        height: 300px;
+        height: 170px;
         overflow: hidden;
     }
 
@@ -289,7 +289,7 @@ section {
     }
 
     #chkCanPropios:checked~div {
-        height: 300px;
+        height: 170px;
         overflow: hidden;
     }
 
@@ -301,7 +301,7 @@ section {
     }
 
     #canalesGlobales {
-        max-height: 300px;
+        max-height: 170px;
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
@@ -318,7 +318,7 @@ section {
     }
 
     #canalesPropios {
-        max-height: 300px;
+        max-height: 170px;
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
@@ -335,7 +335,7 @@ section {
     }
 
     #canalCrear {
-        max-height: 200px;
+        max-height: 170px;
         transition: height 0.3s linear;
         height: 0px;
         width: 100%;
