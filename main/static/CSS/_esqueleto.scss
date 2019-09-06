@@ -34,8 +34,11 @@ $DlightColor2:#93B8A5;
 }
 
 .flexMessageLeft {
+    
     display: flex;
     flex-direction: row;
+    display: -webkit-flex;
+    -webkit-flex-direction :row;
 
     p {
         text-align: justify;
@@ -45,6 +48,8 @@ $DlightColor2:#93B8A5;
 }
 
 .flexMessageRight {
+    display: -webkit-flex;
+    -webkit-flex-direction :row;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -59,16 +64,21 @@ $DlightColor2:#93B8A5;
 #contenido {
     height: 100vh;
     overflow: hidden;
+    display: -webkit-flex;
+    -webkit-flex-direction :column;
     display: flex;
     flex-direction: column;
 
     >div:nth-child(1) {
+        display: -webkit-flex;
+    -webkit-flex-direction :column;
         display: flex;
         flex-direction: column;
 
         #titulocanal {
             width: 100%;
-            align-self: flex-start;
+            height: 50px;
+            // align-self: flex-start;
         }
     }
 
@@ -96,11 +106,15 @@ $DlightColor2:#93B8A5;
             min-height: 65px;
             max-height: 150px;
             width: 100%;
+            display: -webkit-flex;
+            -webkit-flex-direction :row;
             display: flex;
             flex-direction: row;
         }
 
         div:nth-child(1) {
+            display: -webkit-flex;
+    -webkit-flex-direction :column;
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
@@ -115,6 +129,8 @@ $DlightColor2:#93B8A5;
         }
 
         div:nth-child(2) {
+            display: -webkit-flex;
+    -webkit-flex-direction :column;
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
@@ -140,6 +156,8 @@ section {
     background-color: $Color1;
 
     div {
+        display: -webkit-flex;
+    -webkit-flex-direction :column;
         display: flex;
         flex-direction: column;
     }
@@ -184,6 +202,8 @@ section {
     }
 
     div:nth-child(1) {
+        display: -webkit-flex;
+        -webkit-flex-direction :row;
         display: flex;
         flex-direction: row;
     }
@@ -206,7 +226,7 @@ section {
         text-align: center;
         font-size: 35px;
         width: 100%;
-        height: 100%;
+        height: 50px;
         background-image: linear-gradient(transparent -10%, black 1600%);
         padding: 5px;
     }
@@ -296,6 +316,8 @@ section {
     background-color: $Color2;
 
     div {
+        display: -webkit-flex;
+    -webkit-flex-direction :column;
         display: flex;
         flex-direction: column;
     }

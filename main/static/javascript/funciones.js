@@ -239,7 +239,8 @@ function buscarCanalglobal() {
         return;
 }
 
-function buscarCanalPropio() {
+function buscarCanalPropio() 
+{
     var nombreCanal = document.querySelector("#buscarCanalPropios");
     if (nombreCanal.value != undefined && nombreCanal.value != "" && nombreCanal.value != null) {
         xhr.open("POST", "/buscarCanalPropio", true);
