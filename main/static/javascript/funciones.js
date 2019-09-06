@@ -2,8 +2,13 @@ var xhr = new XMLHttpRequest();
 var Dias = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var canalesGlobales = document.querySelector("#canalesGlobales").children[1];
 var canalesPropiosdiv = document.querySelector("#canalesPropios").children[1];
+var listaAmigos = document.querySelector("#desAmigos").children[1];
 var canalActual = document.querySelector("#tituloCanal");
-
+// para que al dar click se cree un canal
+var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener("click", crearCanal);
+var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click", buscarCanalglobal);
+var botonBuscarCanalPropio = document.querySelector("#btnBuscarCanalPropios").addEventListener("click", buscarCanalPropio);
+var botonBuscarAmigos = document.querySelector("#btnBuscarAmigos").addEventListener("click",buscarAmigos);
 ////////////////////////////////////////////////MAIN CODE/////////////////////////////////////////////////////////////////
 // Conectar con el servidor
 var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port);
@@ -61,21 +66,25 @@ window.addEventListener("DOMNodeInserted", function () {
     var scroll = document.querySelector("#chatscroll");
     scroll.scrollTop = scroll.scrollTop + scroll.scrollHeight;
 })
-// para que al dar click se cree un canal
-var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener("click", crearCanal);
-var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click", buscarCanalglobal);
-var botonBuscarCanalPropio = document.querySelector("#btnBuscarCanalPropios").addEventListener("click", buscarCanalPropio);
-
 /// procesando todas las respuestas del servidor
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
         var respuesta = JSON.parse(xhr.responseText);
         console.log("respuesta del servidor: "+respuesta);
+        if(respuesta["amigos"])
+        {
+            listaAmigos.innerHTML = "";
+            for (canalesAmigo of respuesta["amigos"]) {
+                var hijo = document.createElement("div");
+                hijo.innerHTML = "<p onclick='pedirCanal(this)' class='global white'>" + canalesAmigo + "</p>";
+                listaAmigos.appendChild(hijo);
+            }
+        }
         if (respuesta["canales"]) {
             canalesGlobales.innerHTML = "";
             for (canales of respuesta["canales"]) {
                 var hijo = document.createElement("div");
-                hijo.innerHTML = "<p onclick='pedirCanal(this)' style='margin:0px; hover{background-color:#B3D8C5;}'>" + canales + "</p>";
+                hijo.innerHTML = "<p onclick='pedirCanal(this)' class='global' >" + canales + "</p>";
                 canalesGlobales.appendChild(hijo);
             }
         }
@@ -104,6 +113,17 @@ xhr.onreadystatechange = function () {
                 console.log("estoy imprimiendo mensjaes del canal recien solicitado")
                 console.log(respuesta.propiedades.mensajes[i])
                 crearMensajeCaja(respuesta.propiedades.mensajes[i]);
+            }
+        }
+        if(respuesta["verificarStorage"])
+        {
+            console.log("el servidor ha respondido para la verificacion del canal en Storage: ",respuesta["verificarStorage"])
+            if(respuesta["verificarStorage"]=="true")
+                return;
+            else
+            {
+                localStorage.removeItem("canalActual");
+                disableTextArea();   
             }
         }
     }
@@ -180,21 +200,26 @@ function divUsuario() {
         divGeneral.setAttribute("style", "position:absolute; top:0px; left:0px; width:100vw; height:100vh; background-color:#F2F2F2; z-index:100; display:flex; flex-direccion:column; justify-content:center; align-items:center;");
         divGeneral.innerHTML = "<div><p>Hola ingresa un usuario para participar:</p><input type='text' placeholder=' Nombre de usuario'></input><button>Entrar</button></div>"
         divGeneral.children[0].children[1].style.width = "100%";
-        divGeneral.children[0].children[2].addEventListener("click", guardarDatos);
+        divGeneral.children[0].children[2].addEventListener("click", () => guardarDatos(divGeneral));
     }
     else {
+        var userConectado = document.querySelector("#userActualConectado");
+        userConectado.innerHTML = localStorage.getItem("usuarioActual");
         divGeneral.setAttribute("style", "display:none;");
     }
-    function guardarDatos() {
-        if (divGeneral.children[0].children[1].value != undefined && divGeneral.children[0].children[1].value != "") {
-            localStorage.setItem("usuarioActual", divGeneral.children[0].children[1].value);
-            divGeneral.setAttribute("style", "display:none;");
-        }
-        else
-            return;
-    }
+
 }
 
+function guardarDatos(divGeneral) {
+    if (divGeneral.children[0].children[1].value != undefined && divGeneral.children[0].children[1].value != "") {
+        localStorage.setItem("usuarioActual", divGeneral.children[0].children[1].value);
+        divGeneral.setAttribute("style", "display:none;");
+        var userConectado = document.querySelector("#userActualConectado");
+        userConectado.innerHTML = localStorage.getItem("usuarioActual");
+    }
+    else
+        return;
+}
 // funcion para deshabilitar textarea si no existe un canal elegido en localsotrage
 function disableTextArea()
 {
@@ -204,6 +229,8 @@ function disableTextArea()
         var botonEnviar = document.querySelector("#boton2");
         botonEnviar.setAttribute("disabled","true");
         botonAttached.setAttribute("disabled","true");
+        var temp = document.querySelector("#tituloCanal");
+        temp.innerHTML = "<div><h2>Sin canal Escoge uno</h2></div>";
     }
     else
     {
@@ -331,8 +358,38 @@ function verificarSoloEspacios(txtString)
     }
 }
 
+// verificar si canal en local storage existe
+function verificarlocalStorage()
+{
+    if(localStorage.getItem("canalActual")!=null && localStorage.getItem("canalActual")!=undefined)
+    {
+        // el programa no puede continuar si este señor no obtiene su respuesta
+        xhr.open("POST","/verificarStorage",false);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.send("canalStorage="+localStorage.getItem("canalActual"));
+    }    
+}
+// funcion para buscar amigos
+function buscarAmigos()
+{
+    var amigo = document.querySelector("#buscarAmigos");
+    if(amigo.value != null && amigo.value != undefined && amigo.value != "" )
+    {
+        xhr.open("POST","/buscarAmigos",true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.send("amigos="+amigo.value);
+    }
+    else
+    {
+        return;
+    }
+}
+
+
+
 //ejecucion inmediata de funciones
 recurAdd("html");
+verificarlocalStorage();
 divUsuario();
 disableTextArea();
 PedirCanalAlVolver();

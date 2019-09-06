@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html id="html" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,9 @@
 </head>
 
 <body>
-    <div id="ingresar"><p>Ingreso Usuario</p></div>
+    <div id="ingresar">
+        <p>Ingreso Usuario</p>
+    </div>
     <section class="row" style="width: 100vw;">
         <div class="col-2" id="menuPrincipal">
             <div class="">
@@ -28,6 +31,8 @@
                 </div>
                 <div class="contenidos">
                     <h3 class="izquierda white">Usuario</h3>
+                    <h5 id="userActualConectado" class="white">User Actual</h5>
+                    <button id="btnDesconectarse" class="btn btn-primary" style="width:100%; height:36px;">Desconectarse</button>
                 </div>
                 <div class="contenidos">
                     <input type="checkbox" id="chkAmigos" name="chkAmigos" style="display:none;">
@@ -36,15 +41,10 @@
                     </label>
                     <div id="desAmigos">
                         <div>
-                            <input type="search" class="form-control" placeholder="  Buscar Persona">
+                            <input id="buscarAmigos" type="search" class="form-control" placeholder="  Buscar Persona">
+                            <button id="btnBuscarAmigos" class="btn btn-primary" style="height:36px;">Buscar</button>
                         </div>
                         <div>
-                            <div>Amigo1</div>
-                            <div>Amigo1</div>
-                            <div>Amigo1</div>
-                            <div>Amigo1</div>
-                            <div>Amigo1</div>
-                            <div>Amigo1</div>
                         </div>
                     </div>
                 </div>
@@ -57,12 +57,12 @@
                 </div>
                 <div id="chat">
                     <div id="chatscroll">
-                        
+
                     </div>
                 </div>
                 <div id="message" class="row">
                     <div id="messageSon">
-                        <textarea id ="txtmensaje" class="col-11" onkeyup=auto_grow(this)></textarea>
+                        <textarea id="txtmensaje" class="col-11" onkeyup=auto_grow(this)></textarea>
                         <div class="col-1">
                             <div><button id="boton1" class="btn btn-primary contenidos">Attach</button></div>
                             <div><button id="boton2" class="btn btn-primary contenidos">Enviar</button></div>
@@ -95,7 +95,8 @@
                     </label>
                     <div id="canalesGlobales">
                         <div>
-                            <input id="buscarCanalGlobal" type="search" class="form-control" placeholder="  Canales globales">
+                            <input id="buscarCanalGlobal" type="search" class="form-control"
+                                placeholder="  Canales globales">
                             <button id="btnBuscarCanalGlobal" class="btn btn-success">Buscar</button>
                         </div>
                         <div>
@@ -109,7 +110,8 @@
                     </label>
                     <div id="canalesPropios">
                         <div>
-                            <input id="buscarCanalPropios" type="search" class="form-control" placeholder="  Canales globales">
+                            <input id="buscarCanalPropios" type="search" class="form-control"
+                                placeholder="  Canales globales">
                             <button id="btnBuscarCanalPropios" class="btn btn-success">Buscar</button>
                         </div>
                         <div>

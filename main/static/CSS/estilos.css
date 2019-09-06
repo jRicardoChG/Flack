@@ -107,6 +107,8 @@ section {
     flex-direction: column; }
   #menuPrincipal h3:hover {
     background-color: #8FB6D1; }
+  #menuPrincipal p:hover {
+    background-color: #8FB6D1; }
   #menuPrincipal #chkAmigos:not(checked) ~ div {
     height: 0px;
     overflow: hidden; }

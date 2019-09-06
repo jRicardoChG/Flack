@@ -165,6 +165,9 @@ section {
     h3:hover {
         background-color: $lightColor1;
     }
+    p:hover{
+        background-color: $lightColor1;
+    }
     #chkAmigos:not(checked)~div {
         height: 0px;
         overflow: hidden;

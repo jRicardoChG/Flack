@@ -63,6 +63,21 @@ def buscarPropio():
 
 
 
+@app.route("/buscarAmigos",methods=["POST"])
+def buscarAmigos():
+    if request.method == "POST":
+        amigo = request.form.get("amigos")
+        retorno = []
+        print("me han pedido buscar los canales del amigo: ",amigo)
+        for llaves in DatosApp.keys():
+            if(DatosApp[llaves]["dueno"]==amigo):
+                retorno[len(retorno):]=[llaves]
+        return jsonify({"amigos":retorno})
+
+
+
+
+
 @app.route("/crearCanal",methods=["POST"])
 def crearCanal():
     if request.method == "POST":
@@ -85,6 +100,18 @@ def canalPedido():
         return jsonify({"canalDeseado":tempCanal,"propiedades":DatosApp[tempCanal]})
     else:
         return jsonify({"respuesta":"no tengo nada"})
+
+
+
+@app.route("/verificarStorage",methods=["POST"])
+def verficarStorageUser():
+    if request.method == "POST":
+        storageUser = request.form.get("canalStorage")
+        print("el usuario se ha logueado y tiene un cnaal guardado",storageUser)
+        if storageUser in DatosApp.keys():
+            return jsonify({"verificarStorage":"true"})
+        else:
+            return jsonify({"verificarStorage":"false"})
 
 
 
