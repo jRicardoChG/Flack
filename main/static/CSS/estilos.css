@@ -60,6 +60,10 @@
       flex: 1 1 auto;
       width: 98%;
       align-self: center; }
+      #contenido > div:nth-child(1) #chat .borrar {
+        width: 20px;
+        color: lightgray;
+        text-align: center; }
       #contenido > div:nth-child(1) #chat #chatscroll {
         width: 100%;
         overflow: scroll;

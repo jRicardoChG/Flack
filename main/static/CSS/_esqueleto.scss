@@ -86,6 +86,14 @@ $DlightColor2:#93B8A5;
         overflow: hidden;
 
         #chat {
+            .borrar
+            {
+                width:20px;
+                color:lightgray;
+                
+                text-align: center;
+            }
+
             overflow: hidden;
             flex: 1 1 auto;
             width: 98%;

@@ -9,6 +9,7 @@ var botonCrearCanal = document.querySelector("#btnCrearCanal").addEventListener(
 var botonBuscarGlobal = document.querySelector("#btnBuscarCanalGlobal").addEventListener("click", buscarCanalglobal);
 var botonBuscarCanalPropio = document.querySelector("#btnBuscarCanalPropios").addEventListener("click", buscarCanalPropio);
 var botonBuscarAmigos = document.querySelector("#btnBuscarAmigos").addEventListener("click",buscarAmigos);
+var botonDesconectarse = document.querySelector("#btnDesconectarse").addEventListener("click",DescUsuario);
 ////////////////////////////////////////////////MAIN CODE/////////////////////////////////////////////////////////////////
 // Conectar con el servidor
 var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port);
@@ -38,12 +39,12 @@ socket.on("mensajeServer", mensaje => {
         let mensajeCaja = document.createElement("div");
         if (recibido["dueno"] == localStorage.getItem("usuarioActual"))
         {
-            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
+            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p><p class="global borrar">x</p></div>';
             mensajeCaja.classList.add("flexMessageRight");
         }
         else
         {
-            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p></div>';
+            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p><p class="global borrar">x</p></div>';
             mensajeCaja.classList.add("flexMessageLeft");
         }  
         mensajeCaja.classList.add("global");
@@ -52,7 +53,6 @@ socket.on("mensajeServer", mensaje => {
         mensajeCaja.children[0].children[0].innerHTML = recibido.timeStamp +" "+ recibido.dueno;
         mensajeCaja.children[0].children[1].innerHTML = recibido.mensaje;
         chat.appendChild(mensajeCaja);
-
     }
 })
 // Para poder enviar datos con enter
@@ -136,12 +136,12 @@ function crearMensajeCaja(mensajeDatos)
     let mensajeCaja = document.createElement("div");
     if (mensajeDatos["dueno"] == localStorage.getItem("usuarioActual"))
     {
-        mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.innerHTML = '<div class="mOwn global" onclick="activarBorrarMensaje()"><p class="global timestamp"></p><p class="global"></p></div>';
         mensajeCaja.classList.add("flexMessageRight");
     }
     else
     {
-        mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.innerHTML = '<div class="mCom global" onclick="activarBorrarMensaje()"><p class="global timestamp"></p><p class="global"></p></div>';
         mensajeCaja.classList.add("flexMessageLeft");
     }  
     mensajeCaja.classList.add("global");
@@ -196,7 +196,7 @@ function auto_grow(element) {
 // funcion para poner div que obliga al usuario a crear un usuario, si ya esta guardado en localstorage no aparece
 function divUsuario() {
     var divGeneral = document.querySelector("#ingresar");
-    if (localStorage.getItem("usuarioActual") == undefined) {
+    if (localStorage.getItem("usuarioActual") == undefined || localStorage.getItem("usuarioActual") == null) {
         divGeneral.setAttribute("style", "position:absolute; top:0px; left:0px; width:100vw; height:100vh; background-color:#F2F2F2; z-index:100; display:flex; flex-direccion:column; justify-content:center; align-items:center;");
         divGeneral.innerHTML = "<div><p>Hola ingresa un usuario para participar:</p><input type='text' placeholder=' Nombre de usuario'></input><button>Entrar</button></div>"
         divGeneral.children[0].children[1].style.width = "100%";
@@ -225,7 +225,6 @@ function disableTextArea()
 {
     if(localStorage.getItem("canalActual")==null || localStorage.getItem("canalActual")==undefined || localStorage.getItem("canalActual")=="")
     {
-        var botonAttached = document.querySelector("#boton1");
         var botonEnviar = document.querySelector("#boton2");
         botonEnviar.setAttribute("disabled","true");
         botonAttached.setAttribute("disabled","true");
@@ -240,7 +239,6 @@ function disableTextArea()
         var botonAttached = document.querySelector("#boton1");
         var botonEnviar = document.querySelector("#boton2");
         botonEnviar.removeAttribute("disabled");
-        botonAttached.removeAttribute("disabled");
         socket.emit("join",{"canalAUnir":localStorage.getItem("canalActual")})
     }
 }
@@ -282,12 +280,11 @@ function buscarCanalPropio()
 function enviardatos() {
     var seleccion = document.querySelector("#txtmensaje");
     console.log("esto tomo del textarea",seleccion.value);
-    var botonEnviar = document.querySelector("#boton1");
     if(verificarSoloEspacios(seleccion.value))
     {
         return;
     }
-    if (seleccion.value == "" || seleccion.value == null || seleccion.value == undefined || botonEnviar.disabled==true ) {
+    if (seleccion.value == "" || seleccion.value == null || seleccion.value == undefined ) {
         return;
     }
     else {
@@ -385,6 +382,16 @@ function buscarAmigos()
     }
 }
 
+function DescUsuario(){
+    localStorage.removeItem("usuarioActual");
+    localStorage.removeItem("canalActual");
+    let chat = document.querySelector("#chatscroll");
+    chat.innerHTML = "";
+    verificarlocalStorage();
+    divUsuario();
+    disableTextArea();
+    // PedirCanalAlVolver();
+}
 
 
 //ejecucion inmediata de funciones
