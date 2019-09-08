@@ -76,8 +76,6 @@ def buscarAmigos():
 
 
 
-
-
 @app.route("/crearCanal",methods=["POST"])
 def crearCanal():
     if request.method == "POST":
@@ -100,6 +98,22 @@ def canalPedido():
         return jsonify({"canalDeseado":tempCanal,"propiedades":DatosApp[tempCanal]})
     else:
         return jsonify({"respuesta":"no tengo nada"})
+
+
+
+@socketio.on("borrarMensaje")
+def borrarMensaje(datos):
+    dueno = datos["dueno"]
+    timestamp = datos["timestamp"]
+    texto = datos["texto"]
+    canal = datos["canal"]
+    print("me han pedido borrar un mensaje de: ",dueno," del canal: ",canal," timestamp: ",timestamp," y dice:",texto)
+    for vector in range(0,len(DatosApp[canal]["mensajes"])):
+        print("mensajes en: ",DatosApp[canal]["mensajes"][vector])
+        if dueno in DatosApp[canal]["mensajes"][vector]["dueno"] and timestamp in DatosApp[canal]["mensajes"][vector]["timeStamp"] and texto in DatosApp[canal]["mensajes"][vector]["txtMessage"]:
+            DatosApp[canal]["mensajes"][vector]["txtMessage"]="mensaje borrado"
+    print("resultado borrado: ",DatosApp[canal]["mensajes"])        
+    emit("mensajeBorrado",{"canalDeseado":canal,"propiedades":DatosApp[canal]},room = canal)
 
 
 
@@ -142,6 +156,8 @@ def uniraRoom(datos):
 def dejarRoom(datos):
     leave_room(datos["canalADejar"])
     return jsonify({"respuesta":"Has abandonado la Room"})
+
+
 
 if __name__ == '__main__':
     socketio.run(app)

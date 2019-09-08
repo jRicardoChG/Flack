@@ -8,11 +8,29 @@ $lightColor2:#C3E8D5;
 $DlightColor1:#4F7691;
 $DlightColor2:#93B8A5;
 
-.timestamp
+.ocultar{display:none;}
+
+.centrartexto
 {
+    text-align: center;
+}
+.timestamp {
+    text-align:center;
     font-style: italic;
     font-size: 12px;
     color: gray;
+}
+.position{
+    position:relative;
+}
+.click {
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
 }
 
 .global {
@@ -23,22 +41,23 @@ $DlightColor2:#93B8A5;
     padding: 0px;
     border-radius: 5px;
 }
-.globalinner
-{
+
+.globalinner {
     margin: 0px;
     padding: 0px;
     border-radius: 5px;
 }
+
 .white {
     color: rgb(200, 200, 200);
 }
 
 .flexMessageLeft {
-    
+
     display: flex;
     flex-direction: row;
     display: -webkit-flex;
-    -webkit-flex-direction :row;
+    -webkit-flex-direction: row;
 
     p {
         text-align: justify;
@@ -49,7 +68,7 @@ $DlightColor2:#93B8A5;
 
 .flexMessageRight {
     display: -webkit-flex;
-    -webkit-flex-direction :row;
+    -webkit-flex-direction: row;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -65,13 +84,13 @@ $DlightColor2:#93B8A5;
     height: 100vh;
     overflow: hidden;
     display: -webkit-flex;
-    -webkit-flex-direction :column;
+    -webkit-flex-direction: column;
     display: flex;
     flex-direction: column;
 
     >div:nth-child(1) {
         display: -webkit-flex;
-    -webkit-flex-direction :column;
+        -webkit-flex-direction: column;
         display: flex;
         flex-direction: column;
 
@@ -86,11 +105,10 @@ $DlightColor2:#93B8A5;
         overflow: hidden;
 
         #chat {
-            .borrar
-            {
-                width:20px;
-                color:lightgray;
-                
+            .borrar {
+                width: 20px;
+                color: lightgray;
+
                 text-align: center;
             }
 
@@ -115,14 +133,14 @@ $DlightColor2:#93B8A5;
             max-height: 150px;
             width: 100%;
             display: -webkit-flex;
-            -webkit-flex-direction :row;
+            -webkit-flex-direction: row;
             display: flex;
             flex-direction: row;
         }
 
         div:nth-child(1) {
             display: -webkit-flex;
-    -webkit-flex-direction :column;
+            -webkit-flex-direction: column;
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
@@ -138,7 +156,7 @@ $DlightColor2:#93B8A5;
 
         div:nth-child(2) {
             display: -webkit-flex;
-    -webkit-flex-direction :column;
+            -webkit-flex-direction: column;
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
@@ -165,7 +183,7 @@ section {
 
     div {
         display: -webkit-flex;
-    -webkit-flex-direction :column;
+        -webkit-flex-direction: column;
         display: flex;
         flex-direction: column;
     }
@@ -173,9 +191,11 @@ section {
     h3:hover {
         background-color: $lightColor1;
     }
-    p:hover{
+
+    p:hover {
         background-color: $lightColor1;
     }
+
     #chkAmigos:not(checked)~div {
         height: 0px;
         overflow: hidden;
@@ -185,6 +205,7 @@ section {
         height: 300px;
         overflow: hidden;
     }
+
     #desAmigos {
         max-height: 300px;
         transition: height 0.3s linear;
@@ -214,7 +235,7 @@ section {
 
     div:nth-child(1) {
         display: -webkit-flex;
-        -webkit-flex-direction :row;
+        -webkit-flex-direction: row;
         display: flex;
         flex-direction: row;
     }
@@ -288,14 +309,17 @@ section {
     h3:hover {
         background-color: $lightColor2;
     }
-    p:hover{
-        background-color:$DlightColor2; 
+
+    p:hover {
+        background-color: $DlightColor2;
     }
-    p{
-        border-radius:5px;
-        padding-left:4px; 
-        margin:0px;
+
+    p {
+        border-radius: 5px;
+        padding-left: 4px;
+        margin: 0px;
     }
+
     #chkCanBuscar:not(checked)~div {
         height: 0px;
         overflow: hidden;
@@ -328,7 +352,7 @@ section {
 
     div {
         display: -webkit-flex;
-    -webkit-flex-direction :column;
+        -webkit-flex-direction: column;
         display: flex;
         flex-direction: column;
     }
@@ -385,7 +409,7 @@ section {
 }
 
 textarea {
-    width:100%;
+    width: 100%;
     resize: none;
     overflow: scroll;
     overflow-x: hidden;

@@ -39,27 +39,42 @@ socket.on("mensajeServer", mensaje => {
         let mensajeCaja = document.createElement("div");
         if (recibido["dueno"] == localStorage.getItem("usuarioActual"))
         {
-            mensajeCaja.innerHTML = '<div class="mOwn global"><p class="global timestamp"></p><p class="global"></p><p class="global borrar">x</p></div>';
+            mensajeCaja.innerHTML = '<div class="mOwn global "><div class="position"><p class="global timestamp"></p><p class="global"></p><div onclick="activarBorrarMensaje(this)" class="click"></div></div><p style="text-align:center;" class="global timestamp ocultar" onclick="pedirBorrarMensaje(this)">Delete</p></div>';
             mensajeCaja.classList.add("flexMessageRight");
+            
         }
         else
         {
-            mensajeCaja.innerHTML = '<div class="mCom global"><p class="global timestamp"></p><p class="global"></p><p class="global borrar">x</p></div>';
+            mensajeCaja.innerHTML = '<div class="mCom global"><div class="position"><p class="global timestamp"></p><p class="global"></p><div onclick="activarBorrarMensaje(this)" class="click"></div></div><p style="text-align:center;" class="global timestamp ocultar" onclick="pedirBorrarMensaje(this)">Detele</p></div>';
             mensajeCaja.classList.add("flexMessageLeft");
         }  
         mensajeCaja.classList.add("global");
-        mensajeCaja.children[0].children[0].innerHTML = recibido["mensaje"];
+        mensajeCaja.children[0].children[0].children[0].innerHTML = recibido["mensaje"];
         let chat = document.querySelector("#chatscroll");
-        mensajeCaja.children[0].children[0].innerHTML = recibido.timeStamp +" "+ recibido.dueno;
-        mensajeCaja.children[0].children[1].innerHTML = recibido.mensaje;
+        mensajeCaja.children[0].children[0].children[0].innerHTML = recibido.timeStamp +" "+ recibido.dueno;
+        mensajeCaja.children[0].children[0].children[1].innerHTML = recibido.mensaje;
         chat.appendChild(mensajeCaja);
     }
 })
+socket.on("mensajeBorrado", respuesta => {
+            // aqui tengo uqe cargar todos los mensajes que retomo de la solicitud de canal
+            let chat = document.querySelector("#chatscroll");
+            chat.innerHTML = "";
+            console.log("al borrar mensaje: ",respuesta);
+            for (i=0;i<respuesta.propiedades.mensajes.length;i++)
+            {
+                console.log("estoy imprimiendo mensjaes del canal recien solicitado")
+                console.log(respuesta.propiedades.mensajes[i])
+                crearMensajeCaja(respuesta.propiedades.mensajes[i]);
+            }
+})
 // Para poder enviar datos con enter
 window.addEventListener("keypress", (event) => {
-    if (event.keyCode === 13 && !event.shiftKey) {
+    if (event.keyCode === 13 && !event.shiftKey && localStorage.getItem("canalActual")!=null) {
         enviardatos();
     }
+    else
+        return;
 });
 // Para que el div de mensajes este siempre abajo y meustre todos los mensajes
 window.addEventListener("DOMNodeInserted", function () {
@@ -136,18 +151,18 @@ function crearMensajeCaja(mensajeDatos)
     let mensajeCaja = document.createElement("div");
     if (mensajeDatos["dueno"] == localStorage.getItem("usuarioActual"))
     {
-        mensajeCaja.innerHTML = '<div class="mOwn global" onclick="activarBorrarMensaje()"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.innerHTML = '<div class="mOwn global"><div class="position"><p class="global timestamp"></p><p class="global"></p><div onclick="activarBorrarMensaje(this)" class="click"></div></div><p style="text-align:center;" class="global timestamp ocultar" onclick="pedirBorrarMensaje(this)">Delete</p></div>';
         mensajeCaja.classList.add("flexMessageRight");
     }
     else
     {
-        mensajeCaja.innerHTML = '<div class="mCom global" onclick="activarBorrarMensaje()"><p class="global timestamp"></p><p class="global"></p></div>';
+        mensajeCaja.innerHTML = '<div class="mCom global"><div class="position"><p class="global timestamp"></p><p class="global"></p><div onclick="activarBorrarMensaje(this)" class="click"></div></div><p style="text-align:center;" class="global timestamp ocultar" onclick="pedirBorrarMensaje(this)">Delete</p></div>';
         mensajeCaja.classList.add("flexMessageLeft");
     }  
     mensajeCaja.classList.add("global");
     let chat = document.querySelector("#chatscroll");
-    mensajeCaja.children[0].children[0].innerHTML = mensajeDatos.timeStamp +" "+ mensajeDatos.dueno;
-    mensajeCaja.children[0].children[1].innerHTML = mensajeDatos.txtMessage;
+    mensajeCaja.children[0].children[0].children[0].innerHTML = mensajeDatos.timeStamp +" "+ mensajeDatos.dueno;
+    mensajeCaja.children[0].children[0].children[1].innerHTML = mensajeDatos.txtMessage;
     chat.appendChild(mensajeCaja);
 }
 
@@ -387,10 +402,26 @@ function DescUsuario(){
     localStorage.removeItem("canalActual");
     let chat = document.querySelector("#chatscroll");
     chat.innerHTML = "";
+    canalActual.innerHTML = "<h2>Sin canal Escoge uno</h2>";
     verificarlocalStorage();
     divUsuario();
     disableTextArea();
     // PedirCanalAlVolver();
+}
+
+function pedirBorrarMensaje(elemento){
+    timestamp = elemento.parentElement.children[0].children[0].innerHTML.split(" ");
+    dueno = timestamp[2];
+    time = timestamp[0]+" "+timestamp[1];
+    texto = elemento.parentElement.children[0].children[1].innerHTML;
+    socket.emit("borrarMensaje",{"dueno":dueno,"timestamp":time,"texto":texto,"canal":localStorage.getItem("canalActual")})
+}
+
+function activarBorrarMensaje(element){
+    if(element.parentElement.parentElement.children[1].classList.value.includes("ocultar"))
+        element.parentElement.parentElement.children[1].classList.remove("ocultar");
+    else
+        element.parentElement.parentElement.children[1].classList.add("ocultar");
 }
 
 
