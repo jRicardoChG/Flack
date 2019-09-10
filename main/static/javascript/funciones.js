@@ -414,7 +414,7 @@ function pedirBorrarMensaje(elemento){
     dueno = timestamp[2];
     time = timestamp[0]+" "+timestamp[1];
     texto = elemento.parentElement.children[0].children[1].innerHTML;
-    socket.emit("borrarMensaje",{"dueno":dueno,"timestamp":time,"texto":texto,"canal":localStorage.getItem("canalActual")})
+    socket.emit("borrarMensaje",{"dueno":dueno,"timestamp":time,"texto":texto,"canal":localStorage.getItem("canalActual"),"userActual":localStorage.getItem("usuarioActual")})
 }
 
 function activarBorrarMensaje(element){

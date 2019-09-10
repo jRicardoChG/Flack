@@ -107,11 +107,15 @@ def borrarMensaje(datos):
     timestamp = datos["timestamp"]
     texto = datos["texto"]
     canal = datos["canal"]
+    userActual = datos["userActual"]
     print("me han pedido borrar un mensaje de: ",dueno," del canal: ",canal," timestamp: ",timestamp," y dice:",texto)
     for vector in range(0,len(DatosApp[canal]["mensajes"])):
         print("mensajes en: ",DatosApp[canal]["mensajes"][vector])
-        if dueno in DatosApp[canal]["mensajes"][vector]["dueno"] and timestamp in DatosApp[canal]["mensajes"][vector]["timeStamp"] and texto in DatosApp[canal]["mensajes"][vector]["txtMessage"]:
-            DatosApp[canal]["mensajes"][vector]["txtMessage"]="mensaje borrado"
+        if dueno == userActual:
+            if dueno in DatosApp[canal]["mensajes"][vector]["dueno"] and timestamp in DatosApp[canal]["mensajes"][vector]["timeStamp"] and texto in DatosApp[canal]["mensajes"][vector]["txtMessage"]:
+                DatosApp[canal]["mensajes"][vector]["txtMessage"]="mensaje borrado"
+        else:
+            emit("mensajenoBorrado",{"respuesta":"No tiene permiso de borrar"},room = canal)
     print("resultado borrado: ",DatosApp[canal]["mensajes"])        
     emit("mensajeBorrado",{"canalDeseado":canal,"propiedades":DatosApp[canal]},room = canal)
 
@@ -139,7 +143,11 @@ def test_connect():
 def socket(datos):
     print(datos)
     longitud = len(DatosApp[datos["room"]]["mensajes"])
+    print("longitud actual del vector de mensajes: ",longitud)
+    if longitud >=100:
+        DatosApp[datos["room"]]["mensajes"].pop(0) 
     DatosApp[datos["room"]]["mensajes"][longitud:] = [{"dueno":datos["dueno"],"timeStamp":datos["timeStamp"],"txtMessage":datos["mensaje"]}] 
+    
     print(DatosApp[datos["room"]]["mensajes"])
     emit("mensajeServer",{"mensaje":datos["mensaje"],"timeStamp":datos["timeStamp"],"dueno":datos["dueno"]},room = datos["room"])
 
